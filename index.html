@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기계 도시 : 작은 톱니</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-container">
+
+        <h1>⚙️ 기계 도시 : 작은 톱니</h1>
+
+        <div class="stats">
+            <span>❤️ HP: <span id="hp">20</span>/20</span>
+            <span>⚔️ ATK: <span id="atk">5</span></span>
+            <span>🪙 GOLD: <span id="gold">0</span></span>
+        </div>
+
+        <div id="story" class="story">
+            당신은 녹슨 금속 방에서 눈을 떴다.<br><br>
+            벽에서는 규칙적인 기계음이 들린다.<br>
+            출구로 보이는 문이 하나 있다.
+        </div>
+
+        <div id="choices" class="choices">
+            <button onclick="goDoor()">문으로 간다</button>
+            <button onclick="searchRoom()">주변을 조사한다</button>
+            <button onclick="showStatus()">상태창 보기</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
