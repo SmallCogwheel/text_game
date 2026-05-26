@@ -7,6 +7,9 @@ let monsters = [];
 let items = [];
 let bosses = [];
 
+let currentEnemy = null;
+let inBattle = false;
+
 let totalSearches = 0;
 const maxSearches = 3;
 
@@ -32,7 +35,6 @@ async function loadGameData() {
         .then(res => res.json());
 
     bosses = await fetch("./assets/boss.json")
-        
         .then(res => res.json());
 }
 
@@ -68,7 +70,6 @@ function renderMap() {
         for (let x = 0; x < mapSize; x++) {
 
             const cell = document.createElement("div");
-
             cell.classList.add("cell");
 
             const key = `${x},${y}`;
@@ -95,7 +96,6 @@ function renderMap() {
             if (isReachable(x, y)) {
 
                 cell.classList.add("reachable");
-
                 cell.onclick = () => moveTo(x, y);
             }
 
@@ -106,6 +106,7 @@ function renderMap() {
 
 function moveTo(x, y) {
 
+    if (inBattle) return;
     if (!isReachable(x, y)) return;
 
     player.x = x;
@@ -180,38 +181,144 @@ function triggerRoomEvent(x, y) {
 function getRandomMonster() {
 
     return monsters[
-        Math.floor(
-            Math.random() * monsters.length
-        )
+        Math.floor(Math.random() * monsters.length)
     ];
 }
 
 function getRandomItem() {
 
     return items[
-        Math.floor(
-            Math.random() * items.length
-        )
+        Math.floor(Math.random() * items.length)
     ];
 }
 
 function encounterEnemy() {
 
-    const monster = getRandomMonster();
+    currentEnemy = {
+        ...getRandomMonster()
+    };
 
-    player.gold += monster.gold;
+    inBattle = true;
+
+    renderBattle();
+}
+
+function renderBattle() {
 
     story.innerHTML = `
-        ⚔️ ${monster.name}<br><br>
+        <h3>⚔️ 전투</h3>
 
-        HP : ${monster.hp}<br>
-        공격력 : ${monster.atk}<br><br>
+        <strong>${currentEnemy.name}</strong><br><br>
 
-        승리했다!<br>
-        골드 +${monster.gold}
+        적 HP : ${currentEnemy.hp}<br>
+        적 공격력 : ${currentEnemy.atk}<br><br>
+
+        내 HP : ${player.hp}<br>
+        내 공격력 : ${player.atk}<br><br>
+
+        <button onclick="attackEnemy()">공격</button>
+        <button onclick="runAway()">도망</button>
     `;
+}
+
+function attackEnemy() {
+
+    if (!inBattle) return;
+
+    currentEnemy.hp -= player.atk;
+
+    if (currentEnemy.hp <= 0) {
+        winBattle();
+        return;
+    }
+
+    player.hp -= currentEnemy.atk;
+
+    if (player.hp <= 0) {
+        gameOver();
+        return;
+    }
 
     updateStats();
+
+    story.innerHTML = `
+        ⚔️ ${currentEnemy.name}에게 ${player.atk} 피해!<br><br>
+
+        💥 ${currentEnemy.name}의 공격!<br>
+        ${currentEnemy.atk} 피해를 입었다.<br><br>
+
+        적 HP : ${currentEnemy.hp}<br>
+        적 공격력 : ${currentEnemy.atk}<br><br>
+
+        내 HP : ${player.hp}<br>
+        내 공격력 : ${player.atk}<br><br>
+
+        <button onclick="attackEnemy()">공격</button>
+        <button onclick="runAway()">도망</button>
+    `;
+}
+
+function winBattle() {
+
+    player.gold += currentEnemy.gold;
+
+    story.innerHTML = `
+        🏆 승리!<br><br>
+
+        ${currentEnemy.name} 처치<br><br>
+
+        골드 +${currentEnemy.gold}
+    `;
+
+    currentEnemy = null;
+    inBattle = false;
+
+    updateStats();
+}
+
+function runAway() {
+
+    if (!inBattle) return;
+
+    if (Math.random() < 0.5) {
+
+        story.innerHTML = `
+            🏃 도망에 성공했다!
+        `;
+
+        currentEnemy = null;
+        inBattle = false;
+
+    } else {
+
+        player.hp -= currentEnemy.atk;
+
+        updateStats();
+
+        if (player.hp <= 0) {
+            gameOver();
+            return;
+        }
+
+        story.innerHTML = `
+            ❌ 도망 실패!<br><br>
+
+            ${currentEnemy.atk} 피해를 입었다.<br><br>
+
+            <button onclick="attackEnemy()">공격</button>
+            <button onclick="runAway()">도망</button>
+        `;
+    }
+}
+
+function gameOver() {
+
+    inBattle = false;
+
+    story.innerHTML = `
+        <h2>☠️ GAME OVER</h2>
+        기계 도시 깊은 곳에서 쓰러졌다.
+    `;
 }
 
 function findGold() {
@@ -223,7 +330,6 @@ function findGold() {
 
     story.innerHTML = `
         🪙 보물 상자 발견!<br><br>
-
         골드 +${amount}
     `;
 
@@ -240,6 +346,15 @@ function emptyRoom() {
 
 function searchRoom() {
 
+    if (inBattle) {
+
+        story.innerHTML = `
+            ⚔️ 전투 중에는 조사할 수 없다.
+        `;
+
+        return;
+    }
+
     if (totalSearches >= maxSearches) {
 
         story.innerHTML = `
@@ -255,11 +370,9 @@ function searchRoom() {
     const item = getRandomItem();
 
     if (item.type === "atk") {
-
         player.atk += item.value;
-
-    } else if (item.type === "hp") {
-
+    }
+    else if (item.type === "hp") {
         player.hp += item.value;
     }
 
@@ -291,16 +404,13 @@ function showStatus() {
 
 function bossRoom() {
 
-    const boss = bosses[0];
+    currentEnemy = {
+        ...bosses[0]
+    };
 
-    story.innerHTML = `
-        👑 ${boss.name}<br><br>
+    inBattle = true;
 
-        HP : ${boss.hp}<br>
-        공격력 : ${boss.atk}<br><br>
-
-        보스전 구현 예정
-    `;
+    renderBattle();
 }
 
 async function init() {
