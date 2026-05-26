@@ -1,15 +1,18 @@
 const story = document.getElementById("story");
 const mapDiv = document.getElementById("map");
 
+const mapSize = 4;
+
 let player = {
     hp: 20,
     atk: 5,
     gold: 0,
-    x: 2,
+    x: 1,
     y: 1
 };
 
-const mapSize = 4;
+const visited = new Set();
+visited.add(`${player.x},${player.y}`);
 
 function updateStats() {
     document.getElementById("hp").textContent = player.hp;
@@ -17,25 +20,64 @@ function updateStats() {
     document.getElementById("gold").textContent = player.gold;
 }
 
+function isReachable(x, y) {
+    const dx = Math.abs(player.x - x);
+    const dy = Math.abs(player.y - y);
+
+    return dx + dy === 1;
+}
+
 function renderMap() {
+
     mapDiv.innerHTML = "";
 
     for (let y = 0; y < mapSize; y++) {
+
         for (let x = 0; x < mapSize; x++) {
 
             const cell = document.createElement("div");
             cell.classList.add("cell");
 
+            const key = `${x},${y}`;
+
+            // 현재 위치
             if (x === player.x && y === player.y) {
+
                 cell.textContent = "■";
                 cell.classList.add("current");
+
             }
+
+            // 보스방
             else if (x === 3 && y === 3) {
+
                 cell.textContent = "★";
                 cell.classList.add("boss");
+
             }
-            else {
+
+            // 방문한 방
+            else if (visited.has(key)) {
+
                 cell.textContent = "□";
+
+            }
+
+            // 미방문
+            else {
+
+                cell.textContent = "·";
+
+            }
+
+            // 이동 가능 칸
+            if (isReachable(x, y)) {
+
+                cell.classList.add("reachable");
+
+                cell.addEventListener("click", () => {
+                    moveTo(x, y);
+                });
             }
 
             mapDiv.appendChild(cell);
@@ -43,24 +85,18 @@ function renderMap() {
     }
 }
 
-function goDoor() {
+function moveTo(x, y) {
 
-    const directions = [];
+    if (!isReachable(x, y)) return;
 
-    if (player.x > 0) directions.push([-1, 0]);
-    if (player.x < mapSize - 1) directions.push([1, 0]);
-    if (player.y > 0) directions.push([0, -1]);
-    if (player.y < mapSize - 1) directions.push([0, 1]);
+    player.x = x;
+    player.y = y;
 
-    const move =
-        directions[Math.floor(Math.random() * directions.length)];
-
-    player.x += move[0];
-    player.y += move[1];
+    visited.add(`${x},${y}`);
 
     renderMap();
 
-    if (player.x === 3 && player.y === 3) {
+    if (x === 3 && y === 3) {
         bossRoom();
         return;
     }
@@ -88,11 +124,9 @@ function encounterEnemy() {
     player.gold += 10;
 
     story.innerHTML = `
-        ⚔️ 녹슨 경비 기계와 조우했다.<br><br>
-
-        전투 끝에 승리했다.<br>
-
-        골드 10 획득.
+        ⚔️ 녹슨 경비 기계를 발견했다.<br><br>
+        간단한 전투 끝에 승리했다.<br><br>
+        골드 +10
     `;
 
     updateStats();
@@ -103,9 +137,8 @@ function findGold() {
     player.gold += 5;
 
     story.innerHTML = `
-        🪙 금속 상자를 발견했다.<br><br>
-
-        골드 5 획득.
+        🪙 버려진 상자를 발견했다.<br><br>
+        골드 +5
     `;
 
     updateStats();
@@ -114,9 +147,8 @@ function findGold() {
 function emptyRoom() {
 
     story.innerHTML = `
-        조용한 방이다.<br><br>
-
-        특별한 일은 일어나지 않았다.
+        🚪 텅 빈 방이다.<br><br>
+        아무 일도 일어나지 않았다.
     `;
 }
 
@@ -126,9 +158,7 @@ function searchRoom() {
 
     story.innerHTML = `
         🔍 방을 조사했다.<br><br>
-
-        작은 톱니를 발견했다.<br>
-
+        작은 톱니를 발견했다.<br><br>
         공격력 +1
     `;
 
@@ -144,7 +174,7 @@ function showStatus() {
         공격력 : ${player.atk}<br>
         골드 : ${player.gold}<br><br>
 
-        위치 : (${player.x}, ${player.y})
+        현재 위치 : (${player.x}, ${player.y})
     `;
 }
 
@@ -153,9 +183,9 @@ function bossRoom() {
     story.innerHTML = `
         👑 보스 방 도착!<br><br>
 
-        거대한 중앙 톱니가 당신 앞에 모습을 드러냈다.<br><br>
+        거대한 중앙 톱니가 움직이기 시작했다.<br><br>
 
-        아직 보스전은 구현되지 않았다.
+        (보스전은 아직 구현되지 않음)
     `;
 }
 
