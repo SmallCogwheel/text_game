@@ -8,30 +8,78 @@
 </head>
 <body>
 
-    <div class="game-container">
+<div class="game-container">
 
-        <h1>⚙️ 기계 도시 : 작은 톱니</h1>
+    <h1>⚙️ 기계 도시 : 작은 톱니</h1>
 
-        <div class="stats">
-            <span>❤️ HP: <span id="hp">20</span>/20</span>
-            <span>⚔️ ATK: <span id="atk">5</span></span>
-            <span>🪙 GOLD: <span id="gold">0</span></span>
+    <div class="stats">
+        <span>❤️ HP: <span id="hp">20</span>/20</span>
+        <span>⚔️ ATK: <span id="atk">5</span></span>
+        <span>🪙 GOLD: <span id="gold">0</span></span>
+    </div>
+
+    <div class="main-content">
+
+        <!-- 스토리 영역 -->
+        <div class="story-section">
+
+            <div id="story" class="story">
+                당신은 녹슨 금속 방에서 눈을 떴다.<br><br>
+
+                벽에서는 규칙적인 기계음이 들린다.<br>
+                출구로 보이는 문이 하나 있다.
+            </div>
+
+            <div id="choices" class="choices">
+                <button onclick="goDoor()">문으로 간다</button>
+                <button onclick="searchRoom()">주변을 조사한다</button>
+                <button onclick="showStatus()">상태창 보기</button>
+            </div>
+
         </div>
 
-        <div id="story" class="story">
-            당신은 녹슨 금속 방에서 눈을 떴다.<br><br>
-            벽에서는 규칙적인 기계음이 들린다.<br>
-            출구로 보이는 문이 하나 있다.
-        </div>
+        <!-- 지도 영역 -->
+        <div class="map-section">
 
-        <div id="choices" class="choices">
-            <button onclick="goDoor()">문으로 간다</button>
-            <button onclick="searchRoom()">주변을 조사한다</button>
-            <button onclick="showStatus()">상태창 보기</button>
+            <h2>🗺 지도</h2>
+
+            <div id="map" class="map-grid">
+
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+                <div class="cell current">■</div>
+                <div class="cell">□</div>
+
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+                <div class="cell">□</div>
+                <div class="cell boss">★</div>
+
+            </div>
+
+            <div class="legend">
+                <p>■ 현재 위치</p>
+                <p>□ 일반 방</p>
+                <p>★ 보스 방</p>
+            </div>
+
         </div>
 
     </div>
 
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
