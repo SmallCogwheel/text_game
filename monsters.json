@@ -1,0 +1,23 @@
+[
+  {
+    "id": "rust_guard",
+    "name": "녹슨 경비 기계",
+    "hp": 15,
+    "atk": 3,
+    "gold": 10
+  },
+  {
+    "id": "gear_spider",
+    "name": "톱니 거미",
+    "hp": 10,
+    "atk": 4,
+    "gold": 8
+  },
+  {
+    "id": "broken_drone",
+    "name": "고장난 드론",
+    "hp": 20,
+    "atk": 2,
+    "gold": 12
+  }
+]
