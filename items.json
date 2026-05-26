@@ -1,0 +1,20 @@
+[
+  {
+    "id": "small_gear",
+    "name": "작은 톱니",
+    "type": "atk",
+    "value": 1
+  },
+  {
+    "id": "reinforced_gear",
+    "name": "강화 톱니",
+    "type": "atk",
+    "value": 2
+  },
+  {
+    "id": "repair_kit",
+    "name": "수리 키트",
+    "type": "hp",
+    "value": 10
+  }
+]
