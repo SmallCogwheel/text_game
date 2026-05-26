@@ -121,3 +121,12 @@ button:hover {
     font-size: 14px;
     line-height: 1.8;
 }
+.reachable {
+    cursor: pointer;
+    border: 2px solid #62ff62;
+}
+
+.reachable:hover {
+    background: #2a2a2a;
+    transform: scale(1.05);
+}
