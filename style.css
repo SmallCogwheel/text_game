@@ -12,14 +12,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .game-container {
-    width: 800px;
+    width: 1200px;
     max-width: 95%;
+    background: #1a1a1a;
     border: 2px solid #444;
     padding: 20px;
-    background: #1a1a1a;
 }
 
 h1 {
@@ -31,13 +32,22 @@ h1 {
 .stats {
     display: flex;
     justify-content: space-around;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #444;
     margin-bottom: 20px;
 }
 
+.main-content {
+    display: flex;
+    gap: 20px;
+}
+
+.story-section {
+    flex: 1;
+}
+
 .story {
-    min-height: 220px;
+    min-height: 350px;
     border: 1px solid #444;
     padding: 15px;
     line-height: 1.8;
@@ -64,4 +74,50 @@ button:hover {
     background: #333;
     border-color: #62ff62;
     color: #62ff62;
+}
+
+.map-section {
+    width: 260px;
+    border: 1px solid #444;
+    padding: 15px;
+}
+
+.map-section h2 {
+    text-align: center;
+    color: #62ff62;
+    margin-bottom: 15px;
+}
+
+.map-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+
+.current {
+    color: #62ff62;
+    font-weight: bold;
+}
+
+.boss {
+    color: #ff4444;
+    font-weight: bold;
+}
+
+.legend {
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    font-size: 14px;
+    line-height: 1.8;
 }
