@@ -31,7 +31,7 @@ async function loadGameData() {
     items = await fetch("./assets/items.json")
         .then(res => res.json());
 
-    bosses = await fetch("./assets/bosses.json")
+    bosses = await fetch("./assets/boss.json")
         .then(res => res.json());
 }
 
