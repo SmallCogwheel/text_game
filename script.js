@@ -100,12 +100,23 @@ function fetchJson(path) {
         if (!res.ok) {
             throw new Error(`${path} 로드 실패 (${res.status})`);
         }
+        // 응답이 JSON인지 확인 (file:// 프로토콜에서 HTML 에러페이지 반환 방지)
+        const ct = res.headers.get("content-type") || "";
+        if (!ct.includes("json") && !ct.includes("text/plain") && !ct.includes("octet-stream") && !ct.includes("application")) {
+            // content-type이 html이면 JSON 파싱 전에 경고만 남기고 빈 배열 반환
+            console.warn(`${path}: content-type이 JSON이 아닙니다 (${ct}). 빈 데이터로 대체합니다.`);
+            return [];
+        }
         return res.json();
+    }).catch(e => {
+        console.warn(`${path} 로드 실패, 빈 데이터로 대체:`, e.message);
+        return [];
     });
 }
 
 // 데이터 로드 기능
 async function loadGameData() {
+    // 이미 로드 완료된 경우 재사용 (실패 캐싱 방지: gameDataPromise는 성공 시만 유지)
     if (gameDataPromise) return gameDataPromise;
 
     gameDataPromise = Promise.all([
@@ -116,15 +127,16 @@ async function loadGameData() {
         fetchJson("./assets/elite_items.json"),
         fetchJson("./assets/superior_items.json")
     ]).then(([monsterData, itemData, bossData, eliteMonsterData, eliteItemData, superiorItemData]) => {
-        monsters = monsterData;
-        items = itemData;
-        bosses = bossData;
-        eliteMonsters = eliteMonsterData;
-        eliteItems = eliteItemData;
-        superiorItems = superiorItemData;
+        monsters = Array.isArray(monsterData) ? monsterData : [];
+        items = Array.isArray(itemData) ? itemData : [];
+        bosses = Array.isArray(bossData) ? bossData : [];
+        eliteMonsters = Array.isArray(eliteMonsterData) ? eliteMonsterData : [];
+        eliteItems = Array.isArray(eliteItemData) ? eliteItemData : [];
+        superiorItems = Array.isArray(superiorItemData) ? superiorItemData : [];
     }).catch(e => {
         console.error("데이터 로드 실패 - JSON 파일 경로 및 문법을 확인하세요:", e);
         monsters = []; items = []; bosses = []; eliteMonsters = []; eliteItems = []; superiorItems = [];
+        gameDataPromise = null; // 실패 시 캐시 초기화 → 다음 호출 시 재시도 가능
     });
 
     return gameDataPromise;
