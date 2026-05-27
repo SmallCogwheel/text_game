@@ -158,6 +158,8 @@ async function selectCharacter(className) {
         maxSearches = 3;
         hasRadar = true; // 넷러너는 시작부터 레이더 가동
         // 넷러너는 별도 무기 없이 해킹 장치 내장 컨셉이지만, 필요시 여기에 기본 아이템을 넣을 수 있습니다.
+        const startingRader = { name: "합성화 금속 레이더", atk: 2,hp: 2, isElite: false, rarity: "normal" };
+        playerInventory.push(startingRader);
     } 
     else if (className === "samurai") {
         player = { hp: 20, maxHp: 20, atk: 7, def: 0, gold: 20, silver: 0, x: 1, y: 1 };
@@ -175,7 +177,7 @@ async function selectCharacter(className) {
         maxSearches = 3;
 
         // [ENG] 메카닉 시작 아이템 객체 정의 및 인벤토리 지급
-        const startingArmor = { name: "강화 티타늄 판넬", def: 1, isElite: false, rarity: "normal" };
+        const startingArmor = { name: "강화 티타늄 판넬", def: 3, isElite: false, rarity: "normal" };
         playerInventory.push(startingArmor);
         
         // 아이템 스탯 반영
