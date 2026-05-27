@@ -191,12 +191,12 @@ async function selectCharacter(className) {
     if (className === "netrunner") {
         introText += `[NET] 내장 오버클럭 레이더가 가동되어 주변 환경 스캔을 시작합니다.<br><br>`;
     } else if (className === "samurai") {
-        introText += `[SAM] 손에 쥔 <b style="color: #62ff62;">크롬 카타나(ATK +2)</b>가 서늘하게 빛납니다. 경비 로봇들을 베어 넘기십시오.<br><br>`;
+        introText += `[SAM] 손에 쥔 <b style="color: #62ff62;">크롬 카타나</b>가 서늘하게 빛납니다. 앞에 있는 모든 것을 베어 넘기십시오.<br><br>`;
     } else if (className === "mechanic") {
-        introText += `[MEC] 두꺼운 <b style="color: #62ff62;">강화 티타늄 판넬(DEF +1)</b>이 신체를 보호합니다. 장기전에 유리합니다.<br><br>`;
+        introText += `[MEC] 두꺼운 <b style="color: #62ff62;">강화 티타늄 판넬</b>에는 당신의 추억이 담겨있습니다.<br><br>`;
     }
     
-    introText += `당신은 기계 도시 지하 ${currentFloor}층의 녹슨 금속 방에서 눈을 떴습니다.<br><br>3층 제어 코어까지 올라가는 것이 목표입니다.<br>벽에서는 규칙적인 기계음이 들려옵니다. 주변을 조사하거나 이동하세요.`;
+    introText += `당신은 기계 도시 지하 ${currentFloor}층의 녹슨 금속 방에서 눈을 떴습니다.<br><br>3층 최상층 코어까지 올라가는 것이 목표입니다.<br>벽에서는 불규칙적인 기계음이 들려옵니다. 주변을 조사하거나 이동하세요.`;
     
     story.innerHTML = introText;
 
