@@ -1069,50 +1069,51 @@ function winBattle() {
 
     if (chosenClass === "samurai") {
     
-        // 현재 처치 수
+        // 총 처치 수 누적
         player.samuraiKills = (player.samuraiKills || 0) + 1;
     
-        // 다음 강화 필요 킬 수 (초기값 3)
+        // 다음 강화 목표 초기값
         if (!player.samuraiNextThreshold) {
             player.samuraiNextThreshold = 3;
         }
     
-        // 강화 조건 달성
+        // 강화 조건
         if (player.samuraiKills >= player.samuraiNextThreshold) {
-                const katana = playerInventory.find(
-                    item => item.name && item.name.includes("크롬 카타나")
-                );
-        
-                if (katana) {
-                    katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS;
-                }
-        
-                story.innerHTML += `
-                <br><br>
-                <span style="color: #ff3333; font-weight: bold;">
-                ⚔️ [SAMURAI_PASSIVE]
-                검술 숙련도 극대화!
-                몬스터 ${player.samuraiNextThreshold}마리 처치 달성으로
-                크롬 카타나가 강화되었습니다!
-                (ATK +${SAMURAI_ATK_BONUS} 영구 상승)
-                </span><br>
-                `;
     
-                // 다음 강화 요구치 증가
-                player.samuraiNextThreshold += 1;
-
-                // 킬 카운트 초기화
-                player.samuraiKills = 0;
-
-            } else {
+            const katana = playerInventory.find(
+                item => item.name && item.name.includes("크롬 카타나")
+            );
     
-                story.innerHTML += `
-                <br><br>
-                <span style="color: #aaa;">
-                🗡️ 카타나에 적의 에너지가 흡수됩니다.
-                (다음 강화까지:
-                ${player.samuraiNextThreshold - player.samuraiKills}마리 처치 필요)
-                </span><br>
+            if (katana) {
+                katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS;
+            }
+    
+            story.innerHTML += `
+            <br><br>
+            <span style="color: #ff3333; font-weight: bold;">
+            ⚔️ [SAMURAI_PASSIVE]
+            검술 숙련도 극대화!
+            누적 ${player.samuraiNextThreshold}마리 처치로
+            크롬 카타나가 강화되었습니다!
+            (ATK +${SAMURAI_ATK_BONUS} 영구 상승)
+            </span><br>
+            `;
+    
+            // 다음 요구치 증가
+            // 3 -> 7 -> 12 -> 18 ...
+            player.samuraiNextThreshold += (
+                Math.floor(player.samuraiNextThreshold / 2) + 1
+            );
+    
+        } else {
+    
+            story.innerHTML += `
+            <br><br>
+            <span style="color: #aaa;">
+            🗡️ 카타나에 적의 에너지가 흡수됩니다.
+            (다음 강화까지:
+            ${player.samuraiNextThreshold - player.samuraiKills}마리 처치 필요)
+            </span><br>
             `;
         }
     }
