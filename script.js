@@ -444,7 +444,7 @@ function renderMap() {
             } 
             else if (x === bossX && y === bossY) {
                 if (visited.has(key) || (hasRadar && isWithinRadar(x, y))) {
-                    cell.textContent = "[BOSS]";
+                    cell.textContent = "[B]";
                     cell.classList.add("boss");
                 } else {
                     cell.textContent = "·";
