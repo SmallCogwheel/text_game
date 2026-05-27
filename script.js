@@ -163,7 +163,7 @@ async function selectCharacter(className) {
         player = { hp: 20, maxHp: 20, atk: 7, def: 0, gold: 20, silver: 0, x: 1, y: 1 };
         maxSearches = 2; 
 
-        // [ATK] 사뮤라이 시작 아이템 객체 정의 및 인벤토리 지급
+        // [SAM] 사뮤라이 시작 아이템 객체 정의 및 인벤토리 지급
         const startingWeapon = { name: "크롬 카타나", atk: 2, isElite: false, rarity: "normal" };
         playerInventory.push(startingWeapon);
         
@@ -189,11 +189,11 @@ async function selectCharacter(className) {
     // 인트로 텍스트 연출
     let introText = `[ENG] 시스템 프로토콜 동조 완료. [클래스: ${className.toUpperCase()}]<br><br>`;
     if (className === "netrunner") {
-        introText += `[R] 내장 오버클럭 레이더가 가동되어 주변 환경 스캔을 시작합니다.<br><br>`;
+        introText += `[NET] 내장 오버클럭 레이더가 가동되어 주변 환경 스캔을 시작합니다.<br><br>`;
     } else if (className === "samurai") {
-        introText += `[ATK] 손에 쥔 <b style="color: #62ff62;">크롬 카타나(ATK +2)</b>가 서늘하게 빛납니다. 경비 로봇들을 베어 넘기십시오.<br><br>`;
+        introText += `[SAM] 손에 쥔 <b style="color: #62ff62;">크롬 카타나(ATK +2)</b>가 서늘하게 빛납니다. 경비 로봇들을 베어 넘기십시오.<br><br>`;
     } else if (className === "mechanic") {
-        introText += `[DEF] 두꺼운 <b style="color: #62ff62;">강화 티타늄 판넬(DEF +1)</b>이 신체를 보호합니다. 장기전에 유리합니다.<br><br>`;
+        introText += `[MEC] 두꺼운 <b style="color: #62ff62;">강화 티타늄 판넬(DEF +1)</b>이 신체를 보호합니다. 장기전에 유리합니다.<br><br>`;
     }
     
     introText += `당신은 기계 도시 지하 ${currentFloor}층의 녹슨 금속 방에서 눈을 떴습니다.<br><br>3층 제어 코어까지 올라가는 것이 목표입니다.<br>벽에서는 규칙적인 기계음이 들려옵니다. 주변을 조사하거나 이동하세요.`;
@@ -438,7 +438,7 @@ function renderMap() {
                     cell.textContent = "□";
                     cell.style.color = "#fff";
                 } else {
-                    cell.textContent = "[R]";
+                    cell.textContent = "[NET]";
                     cell.style.color = "#bb66ff";
                 }
             } 
@@ -579,17 +579,17 @@ function moveTo(x, y) {
         return;
     }
 
-    // [R] 레이더 단말기 방 방문 시 로직 개편 (넷러너 특전 멀티 스탯 대응)
+    // [NET] 레이더 단말기 방 방문 시 로직 개편 (넷러너 특전 멀티 스탯 대응)
     if (hasRadarTerminalOnFloor() && x === radarX && y === radarY) {
         if (roomStates[key] && roomStates[key].type === "radar_cleared") {
-            story.innerHTML = `[R] 레이더 단말기가 설치되어 있던 방입니다. 장치는 이미 완전히 해체되었습니다.`;
+            story.innerHTML = `[NET] 레이더 단말기가 설치되어 있던 방입니다. 장치는 이미 완전히 해체되었습니다.`;
         } else {
             roomStates[key] = { type: "radar_cleared" };
             
             // [MOD] 넷러너 특전: 이미 레이더가 있으므로 장치를 분해하여 랜덤 '엘리트 아이템' 추출!
             if (chosenClass === "netrunner") {
                 if (!eliteItems || eliteItems.length === 0) {
-                    story.innerHTML = `[R] 단말기를 분해했으나 내부 코어가 손상되어 정예 부품을 얻지 못했습니다.`;
+                    story.innerHTML = `[NET] 단말기를 분해했으나 내부 코어가 손상되어 정예 부품을 얻지 못했습니다.`;
                 } else {
                     const eItem = eliteItems[Math.floor(Math.random() * eliteItems.length)];
                     
@@ -598,7 +598,7 @@ function moveTo(x, y) {
                     const logEffects = formatItemEffects(eItem);
 
                     story.innerHTML = `
-                        <h3 style="color: #00ffff; margin-bottom: 8px;">[R] [SCRAP_PROTOCOL] 레이더 시스템 완전 해체</h3>
+                        <h3 style="color: #00ffff; margin-bottom: 8px;">[NET] [SCRAP_PROTOCOL] 레이더 시스템 완전 해체</h3>
                         넷러너인 당신에게 이 고정식 안테나는 필요 없습니다.<br>
                         단말기의 고차원 메인 프로세서를 통째로 뜯어내어 고성능 모듈로 가공했습니다!<br><br>
                         [ENG] 획득 정예 장비: <b style="color: #00ffff;">${eItem.name}</b><br><br>
@@ -670,7 +670,7 @@ function openEliteChest() {
     story.innerHTML = `
         <h2 style="color: #00ffff; margin-bottom: 12px;">[$] 고대 엘리트 보물상자 개방! [$]</h2>
         두꺼운 보안 격벽이 해제되더니 찬란한 특수 전파를 내뿜는 정예 장비가 모습을 드러냅니다.<br><br>
-        [DEF] 획득 아이템: <b style="color: #00ffff;">${item.name}</b><br><br>
+        [ITEM] 획득 아이템: <b style="color: #00ffff;">${item.name}</b><br><br>
         <span style="color: #62ff62; font-weight: bold;">[초강력 엘리트 효과] ${logEffects} 동시 상승!</span>
     `;
     updateStats();
@@ -680,7 +680,7 @@ function openEliteChest() {
 function findRadar() {
     hasRadar = true;
     story.innerHTML = `
-        [R] <b>기계 도시의 단말기 부품(레이더)</b>을 발견했습니다!<br><br>
+        [NET] <b>기계 도시의 단말기 부품(레이더)</b>을 발견했습니다!<br><br>
         미니맵 전력 개방! 현재 위치 기준 주변 1칸 반경(대각선 포함)의 안개를 스캔합니다.<br>
         사거리 내에 들어온 <b>보물 상자([G])</b>, <b>몬스터([!])</b>, <b>정예 기계([X])</b> 및 <b style="color: #00ffff;">정예 상자([$])</b>의 정보가 투시됩니다.
     `;
@@ -964,7 +964,7 @@ function attack() {
     if (chosenClass === "samurai") {
         let extraDamage = Math.max(1, Math.floor(baseDamage * SAMURAI_BONUS_RATIO));
         currentEnemy.hp -= extraDamage;
-        log += `<span style="color: #ff3333; font-weight: bold;">[ATK] [SAMURAI_PASSIVE] 가속 연격 발동! ${extraDamage}의 추가 피해를 입혔습니다.</span><br>`;
+        log += `<span style="color: #ff3333; font-weight: bold;">[SAM] [SAMURAI_PASSIVE] 가속 연격 발동! ${extraDamage}의 추가 피해를 입혔습니다.</span><br>`;
     }
 
     // 적 처치 여부 판정
@@ -1069,7 +1069,7 @@ function winBattle() {
         <br><br><span style="color: #aaaaaa;">바닥에 쓰러진 기계의 잔해가 연기를 내뿜고 있습니다. 시체를 뒤져 쓸만한 전리품을 수색하시겠습니까?</span>
     `;
 
-    if (chosenClass === "samurai") { player.samuraiKills = (player.samuraiKills || 0) + 1; if (player.samuraiKills % SAMURAI_KILL_THRESHOLD === 0) { const katana = playerInventory.find(item => item.name && item.name.includes("크롬 카타나")); if (katana) { katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS; } story.innerHTML += `<br><br><span style="color: #ff3333; font-weight: bold;">[ATK] [SAMURAI_PASSIVE] 검술 숙련도 극대화! 몬스터 ${SAMURAI_KILL_THRESHOLD}마리 처치 달성으로 크롬 카타나가 강화되었습니다! (ATK +${SAMURAI_ATK_BONUS} 영구 상승, 현재 처치: ${player.samuraiKills}마리)</span><br>`; } else { story.innerHTML += `<br><br><span style="color: #aaa;">[SWD] 카타나에 적의 에너지가 흡수됩니다. (다음 강화까지: ${SAMURAI_KILL_THRESHOLD - (player.samuraiKills % SAMURAI_KILL_THRESHOLD)}마리 처치 필요)</span><br>`; } }
+    if (chosenClass === "samurai") { player.samuraiKills = (player.samuraiKills || 0) + 1; if (player.samuraiKills % SAMURAI_KILL_THRESHOLD === 0) { const katana = playerInventory.find(item => item.name && item.name.includes("크롬 카타나")); if (katana) { katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS; } story.innerHTML += `<br><br><span style="color: #ff3333; font-weight: bold;">[SAM] [SAMURAI_PASSIVE] 검술 숙련도 극대화! 몬스터 ${SAMURAI_KILL_THRESHOLD}마리 처치 달성으로 크롬 카타나가 강화되었습니다! (ATK +${SAMURAI_ATK_BONUS} 영구 상승, 현재 처치: ${player.samuraiKills}마리)</span><br>`; } else { story.innerHTML += `<br><br><span style="color: #aaa;">[SWD] 카타나에 적의 에너지가 흡수됩니다. (다음 강화까지: ${SAMURAI_KILL_THRESHOLD - (player.samuraiKills % SAMURAI_KILL_THRESHOLD)}마리 처치 필요)</span><br>`; } }
 
     const choicesDiv = document.getElementById("choices");
     choicesDiv.innerHTML = `
