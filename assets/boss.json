@@ -1,9 +1,28 @@
-[
-  {
-    "id": "core_gear",
-    "name": "중앙 톱니",
-    "hp": 115,
-    "atk": 17,
-    "gold": 120
-  }
-]
+{
+  "floor1": [
+    { "id": "gear_crusher",     "name": "톱니 분쇄기",    "hp": 90,  "atk": 12, "gold": 80  },
+    { "id": "rust_golem",       "name": "녹슨 골렘",      "hp": 110, "atk": 10, "gold": 90  },
+    { "id": "piston_beast",     "name": "피스톤 야수",    "hp": 80,  "atk": 15, "gold": 85  },
+    { "id": "chain_wraith",     "name": "체인 망령",      "hp": 95,  "atk": 13, "gold": 88  },
+    { "id": "boiler_titan",     "name": "보일러 타이탄",  "hp": 130, "atk": 9,  "gold": 95  },
+    { "id": "blade_spinner",    "name": "날 회전체",      "hp": 75,  "atk": 17, "gold": 82  },
+    { "id": "iron_sentinel",    "name": "철제 파수꾼",    "hp": 105, "atk": 11, "gold": 92  },
+    { "id": "core_gear",        "name": "중앙 톱니",      "hp": 115, "atk": 17, "gold": 120 },
+    { "id": "scrap_horror",     "name": "고철 공포",      "hp": 100, "atk": 14, "gold": 87  },
+    { "id": "cog_behemoth",     "name": "톱니 거수",      "hp": 120, "atk": 13, "gold": 100 }
+  ],
+  "floor2": [
+    { "id": "upper_core",       "name": "상층 압축 코어", "hp": 220, "atk": 28, "gold": 220 },
+    { "id": "steam_colossus",   "name": "증기 거인",      "hp": 240, "atk": 25, "gold": 210 },
+    { "id": "arc_welder",       "name": "아크 용접기",    "hp": 200, "atk": 32, "gold": 230 },
+    { "id": "turret_overlord",  "name": "포탑 군주",      "hp": 210, "atk": 30, "gold": 225 },
+    { "id": "forge_demon",      "name": "용광로 악마",    "hp": 260, "atk": 23, "gold": 215 }
+  ],
+  "floor3": [
+    { "id": "final_control_core","name": "최종 제어 코어","hp": 380, "atk": 45, "gold": 380 },
+    { "id": "omega_engine",     "name": "오메가 엔진",    "hp": 420, "atk": 40, "gold": 360 },
+    { "id": "void_reactor",     "name": "공허 반응로",    "hp": 350, "atk": 50, "gold": 400 },
+    { "id": "apex_automaton",   "name": "정점 자동기",    "hp": 400, "atk": 43, "gold": 370 },
+    { "id": "singularity_core", "name": "특이점 코어",    "hp": 450, "atk": 38, "gold": 390 }
+  ]
+}
