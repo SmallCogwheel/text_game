@@ -3,30 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기계 도시 : 작은 톱니</title>
+    <title>기계 도시 : 작은 톱니 (확장판)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="game-container">
-
     <h1>⚙️ 기계 도시 : 작은 톱니</h1>
 
     <div class="stats">
-        <span>❤️ HP: <span id="hp">20</span>/20</span>
+        <span>❤️ HP: <span id="hp">20/20</span></span>
         <span>⚔️ ATK: <span id="atk">5</span></span>
         <span>🪙 GOLD: <span id="gold">0</span></span>
         <span>🔍 조사: <span id="searchCount">3/3</span></span>
     </div>    
 
     <div class="main-content">
-
-        <!-- 스토리 영역 -->
         <div class="story-section">
-
             <div id="story" class="story">
                 당신은 녹슨 금속 방에서 눈을 떴다.<br><br>
-
                 벽에서는 규칙적인 기계음이 들린다.<br>
                 출구로 보이는 문이 하나 있다.
             </div>
@@ -35,29 +30,25 @@
                 <button onclick="searchRoom()">주변을 조사한다</button>
                 <button onclick="showStatus()">상태창 보기</button>
             </div>
-
         </div>
 
-        <!-- 지도 영역 -->
         <div class="map-section">
-
             <h2>🗺 지도</h2>
-
             <div id="map" class="map-grid"></div>
 
             <div class="legend">
-                <p>■ 현재 위치</p>
-                <p>□ 일반 방</p>
-                <p>★ 보스 방</p>
+                <p><span style="color: #62ff62;">■</span> 현재 위치</p>
+                <p><span style="color: #33bbff;">⚡</span> 자가 발전 충전소 (휴식)</p>
+                <p><span style="color: #ffaa00;">⚠️</span> 도망친 적이 있는 방</p>
+                <p><span style="color: #bb66ff;">📡</span> 레이더가 있는 방 (신규)</p> <p><span style="color: #ff3333;">★</span> 중앙 제어실 (보스)</p>
+                <p><span style="color: #fff;">□</span> 탐색 완료한 방</p>
+                <p><span style="color: #666;">░</span> 레이더 감지 구역</p>
+                <p><span style="color: #444;">·</span> 미탐색 지역</p>
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
