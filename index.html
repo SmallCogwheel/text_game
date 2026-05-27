@@ -3,52 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기계 도시 : 작은 톱니 (확장판)</title>
+    <title>ROOT_ACCESS : 기계 도시</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="game-container">
-    <h1>⚙️ 기계 도시 : 작은 톱니</h1>
-
-    <div class="stats">
-        <span>❤️ HP: <span id="hp">20/20</span></span>
-        <span>⚔️ ATK: <span id="atk">5</span></span>
-        <span>🪙 GOLD: <span id="gold">0</span></span>
-        <span>🔍 조사: <span id="searchCount">3/3</span></span>
-    </div>    
-
-    <div class="main-content">
-        <div class="story-section">
-            <div id="story" class="story">
-                당신은 녹슨 금속 방에서 눈을 떴다.<br><br>
-                벽에서는 규칙적인 기계음이 들린다.<br>
-                또 다른 입구로 보이는 문이 하나 있다.
+    <!-- ✨ 신규 추가: 캐릭터 선택 화면 (데모 스타트 라인) -->
+    <div id="char-select-container" class="char-select-container">
+        <h1 class="select-title">⚡ SELECT_YOUR_AVATAR // 클래스 선택</h1>
+        <p class="select-desc">기계 도시 코어 해킹을 위한 프로토콜 아바타를 동조하십시오.</p>
+        
+        <div class="char-grid">
+            <!-- 1. 넷러너 (기존 레이더방 특전 상세화) -->
+            <div class="char-card" onclick="selectCharacter('netrunner')">
+                <div class="char-icon" style="color: #00ffcc;">📡</div>
+                <h2>넷러너 (Netrunner)</h2>
+                <p class="char-lore">시스템 해킹 특화형 아바타. 탐지 장치를 기본 탑재하여 적의 위치를 미리 간파합니다.</p>
+                <div class="char-stats-preview">❤️ HP: 16 | ⚔️ ATK: 4 | 🛡️ DEF: 0 | 🔍 SCAN: 3</div>
+                <div class="char-item-preview">🎁 특전: 동조 레이더 가동 및 레이더실 분해 시 엘리트 장비 연성</div>
             </div>
 
-            <div id="choices" class="choices">
-                <button onclick="searchRoom()">주변을 조사한다</button>
-                <button onclick="showStatus()">상태창 보기</button>
+            <!-- 2. 스트리트 사뮤라이 (20% 추가 피해 패시브 반영) -->
+            <div class="char-card" onclick="selectCharacter('samurai')">
+                <div class="char-icon" style="color: #ff0055;">⚔️</div>
+                <h2>사무라이 (Samurai)</h2>
+                <p class="char-lore">전면전 특화형 고속 검사. 높은 기본 공격력과 크롬 카타나를 장착하고 시작합니다.</p>
+                <div class="char-stats-preview">❤️ HP: 20 | ⚔️ ATK: 7 | 🛡️ DEF: 0 | 🔍 SCAN: 2</div>
+                <div class="char-item-preview" style="color: #ff5555; font-weight: bold;">🎁 특전: 크롬 카타나 장착 + 가한 데미지의 20% 추가 피해</div>
             </div>
-        </div>
 
-        <div class="map-section">
-            <h2>🗺 지도</h2>
-            <div id="map" class="map-grid"></div>
-
-            <div class="legend">
-                <p><span style="color: #62ff62;">■</span> 현재 위치</p>
-                <p><span style="color: #33bbff;">⚡</span> 자가 발전 충전소 (휴식)</p>
-                <p><span style="color: #ffaa00;">⚠️</span> 도망친 적이 있는 방</p>
-                <p><span style="color: #bb66ff;">📡</span> 레이더가 있는 방 (신규)</p> <p><span style="color: #ff3333;">★</span> 중앙 제어실 (보스)</p>
-                <p><span style="color: #fff;">□</span> 탐색 완료한 방</p>
-                <p><span style="color: #666;">░</span> 레이더 감지 구역</p>
-                <p><span style="color: #444;">·</span> 미탐색 지역</p>
+            <!-- 3. 헤비 메카닉 (시체 파밍 100% 성공 확정 반영) -->
+            <div class="char-card" onclick="selectCharacter('mechanic')">
+                <div class="char-icon" style="color: #ffaa00;">🛡️</div>
+                <h2>메카닉 (Mechanic)</h2>
+                <p class="char-lore">방어 및 유지력 특화 엔지니어. 단단한 티타늄 장갑과 방어 장비를 가집니다.</p>
+                <div class="char-stats-preview">❤️ HP: 26 | ⚔️ ATK: 3 | 🛡️ DEF: 2 | 🔍 SCAN: 3</div>
+                <div class="char-item-preview" style="color: #62ff62; font-weight: bold;">🎁 특전: 티타늄 판넬 장착 + 기계 시체 수색 성공률 100% (자폭 무력화)</div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="script.js"></script>
+    <!-- 기존 게임 컨테이너 (기본 상태는 숨김 처리 style="display: none;") -->
+    <div id="game-container" class="game-container" style="display: none;">
+        <!-- 왼쪽: 게임 로그 및 조작 섹션 -->
+        <div class="main-section">
+            <h1 class="game-title">⚡ ROOT_ACCESS <span class="subtitle">// 기계 도시</span></h1>
+
+            <!-- 상단 고정 스탯 바 -->
+            <div class="stats">
+                <div class="stat-item">❤️ HP: <span id="hp">20/20</span></div>
+                <div class="stat-item">⚔️ ATK: <span id="atk">5</span></div>
+                <div class="stat-item">🛡️ DEF: <span id="def">0</span></div>
+                <div class="stat-item">🪙 GOLD: <span id="gold">20</span></div>
+                <div class="stat-item">🔍 SCAN: <span id="searchCount">3/3</span></div>
+            </div>
+
+            <!-- 스토리 텍스트 출력 구역 -->
+            <div id="story" class="story-box">
+                <!-- 선택된 직업에 따라 스크립트가 동적으로 채워집니다 -->
+            </div>
+
+            <!-- 토글식 상태창 및 인벤토리 -->
+            <div id="status-window" class="status-window">
+                <div class="status-content">
+                    <h3>📜 시스템 세부 진단</h3>
+                    <div class="status-info">
+                        <div>• 현재 내구도(HP): <span id="status-hp">20 / 20</span></div>
+                        <div>• 출력 제어(ATK): <span id="status-atk">5</span></div>
+                        <div>• 장갑 수치(DEF): <span id="status-def">0</span></div>
+                        <div>• 보유 자원(GOLD): 🪙 <span id="status-gold">20</span></div>
+                        <div>• 동조 장치(RADAR): <span id="status-radar">OFF</span></div>
+                    </div>
+                    <hr class="status-divider">
+                    <h4>🎒 획득한 확장 모듈 (인벤토리)</h4>
+                    <div id="inventory">획득한 장비가 없습니다.</div>
+                </div>
+            </div>
+
+            <!-- 하단 선택지 버튼 구역 -->
+            <div id="choices" class="choices">
+                <button onclick="searchRoom()">주변을 조사한다</button>
+                <button onclick="toggleStatus()">상태창 보기</button>
+                <button onclick="confirmGoToCharSelect()">클래스 재선택</button>
+            </div>
+        </div>
+
+        <!-- 오른쪽: 지도 및 범례 섹션 -->
+        <div class="map-section">
+            <h2 class="section-title">🗺️ 구역 미니맵</h2>
+            <div id="map" class="map-grid"></div>
+            
+            <div class="legend">
+                <h3>📌 구역 범례</h3>
+                <ul>
+                    <li><span class="legend-symbol" style="color: #62ff62;">■</span> 현재 위치</li>
+                    <li><span class="legend-symbol" style="color: #fff;">□</span> 탐색 완료 구역</li>
+                    <li><span class="legend-symbol" style="color: #888;">·</span> 미탐색 구역</li>
+                    <li><span class="legend-symbol" style="color: #ffbb33;">■</span> 레이더 탐지 (빈 방)</li>
+                    <li><span class="legend-symbol">⚠️</span> 기계 경비 (몬스터)</li>
+                    <li><span class="legend-symbol" style="color: #ff3333;">☠️</span> 정예 경비 (엘리트)</li>
+                    <li><span class="legend-symbol" style="color: #bb66ff;">📡</span> 레이더 단말기</li>
+                    <li><span class="legend-symbol" style="color: #ffaa00;">⚡</span> 발전 충전소 (휴식)</li>
+                    <li><span class="legend-symbol" style="color: #00ffff;">💎</span> 엘리트 금고 (상자)</li>
+                    <li><span class="legend-symbol" style="color: #ff33ff;">★</span> 중앙 제어실 (보스)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

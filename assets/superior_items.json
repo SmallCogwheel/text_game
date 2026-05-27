@@ -1,0 +1,28 @@
+[
+  {
+    "id": "singularity_edge",
+    "name": "특이점 절단기 (은화)",
+    "atk": 9,
+    "hp": 8
+  },
+  {
+    "id": "reactor_plate",
+    "name": "반응로 장갑판 (은화)",
+    "def": 3,
+    "hp": 18
+  },
+  {
+    "id": "overdrive_core",
+    "name": "오버드라이브 코어 (은화)",
+    "atk": 6,
+    "def": 2,
+    "hp": 12
+  },
+  {
+    "id": "white_silver_frame",
+    "name": "은하 공명 프레임 (은화)",
+    "atk": 4,
+    "def": 2,
+    "hp": 20
+  }
+]

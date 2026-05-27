@@ -1,0 +1,18 @@
+[
+  {
+    "id": "overcharged_drone",
+    "name": "과전하 드론",
+    "hp": 40,
+    "atk": 9,
+    "gold": 32,
+    "isElite": true
+  },
+  {
+    "id": "prototype_defender",
+    "name": "망가진 유물 디펜더",
+    "hp": 58,
+    "atk": 6,
+    "gold": 42,
+    "isElite": true
+  }
+]

@@ -2,43 +2,28 @@
   {
     "id": "small_gear",
     "name": "작은 톱니",
-    "type": "atk",
-    "value": 1
+    "atk" : 1
   },
   {
     "id": "reinforced_gear",
     "name": "강화 톱니",
-    "type": "atk",
-    "value": 2
-  },
-  {
-    "id": "small_gear",
-    "name": "작은 톱니",
-    "type": "atk",
-    "value": 1
-  },
-  {
-    "id": "reinforced_gear",
-    "name": "강화 톱니",
-    "type": "atk",
-    "value": 2
+    "atk" : 1,
+    "hp"  : 1,
+    "def" : 1
   },
   {
     "id": "gear_knife",
     "name": "톱니 칼",
-    "type": "atk",
-    "value": 4
+    "atk" : 2
   },
   {
     "id": "gear_armor",
     "name": "톱니 갑옷",
-    "type": "hp",
-    "value": 20
+    "def" : 2
   },
   {
     "id": "repair_kit",
     "name": "수리 키트",
-    "type": "hp",
-    "value": 10
+    "hp"  : 10
   }
 ]

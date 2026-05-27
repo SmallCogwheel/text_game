@@ -1,0 +1,34 @@
+[
+  {
+    "id": "nano_blade",
+    "name": "나노 고주파 검 (엘리트)",
+    "atk": 7,
+    "hp": 4
+  },
+  {
+    "id": "heavy_exosuit",
+    "name": "중장갑 외골격 슈트 (엘리트)",
+    "hp": 22,
+    "def": 2
+  },
+  {
+    "id": "nano_shield",
+    "name": "나노 전자기막 방패 (엘리트)",
+    "def": 2,
+    "hp": 12
+  },
+  {
+    "id": "cat_bond",
+    "name": "초 강력 고양이 본드? (엘리트)",
+    "atk": 5,
+    "def": 2,
+    "hp" : 5
+  },
+  {
+    "id": "quantum_core",
+    "name": "양자 증폭 코어 (엘리트)",
+    "atk": 8,
+    "def": 1,
+    "hp": 8
+  }
+]

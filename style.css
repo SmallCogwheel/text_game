@@ -1,190 +1,449 @@
+/* ==========================================
+   Cyberpunk 2077 / Netrunner HUD Theme
+   ========================================== */
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
+/* 사이버펑크 넷러너 스캔라인 효과 배경 */
 body {
-    background: #111;
-    color: #ddd;
-    font-family: 'Consolas', 'Courier New', monospace;
-    min-height: 100vh;
+    background-color: #030305;
+    background-image: 
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 6px 100%;
+    color: #00ffcc; /* 기본 사이버 테일 색상 */
+    font-family: 'Consolas', 'Courier New', 'Orbitron', 'Malgun Gothic', monospace;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
     padding: 20px;
 }
 
+/* 전체 메인 컨테이너 - 네온 프레임 */
 .game-container {
+    display: flex;
     width: 1000px;
-    max-width: 95%;
-    background: #1a1a1a;
-    border: 2px solid #444;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    height: 650px;
+    background: #090a10;
+    border: 2px solid #ff0055;
+    border-right: 5px solid #ff0055; /* 포인트 두께 */
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.3), inset 0 0 15px rgba(0, 255, 204, 0.1);
+    position: relative;
+    clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%); /* 사이버펑크 특유의 각진 모서리 무늬 */
 }
 
-h1 {
-    text-align: center;
-    color: #62ff62;
-    margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(98, 255, 98, 0.3);
+/* 메인 컨테이너 장식용 텍스트 (사이버틱 분위기용) */
+.game-container::before {
+    content: "SYSTEM STATUS: ACTIVE // NETRUNNER_OS_V4.02";
+    position: absolute;
+    top: -18px;
+    left: 10px;
+    font-size: 10px;
+    color: #ffaa00;
+    letter-spacing: 2px;
 }
 
-.stats {
+/* 왼쪽 게임 로그 섹션 */
+.main-section {
+    flex: 1.4;
     display: flex;
-    justify-content: space-around;
-    padding: 15px;
-    border: 1px solid #444;
-    margin-bottom: 20px;
-    background: #151515;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.main-content {
-    display: flex;
-    gap: 20px;
-}
-
-.story-section {
-    flex: 1;
-}
-
-.story {
-    min-height: 380px;
-    border: 1px solid #444;
-    padding: 15px;
-    line-height: 1.8;
-    margin-bottom: 20px;
-    background: #111;
+    flex-direction: column;
+    padding: 25px;
+    border-right: 2px solid #202538;
+    background: rgba(10, 12, 22, 0.85);
     overflow-y: auto;
 }
 
+/* 상단 고정 스탯 바 - 강화 장갑 패널 스타일 */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    background: #121625;
+    border: 1px solid #00ffcc;
+    border-left: 4px solid #00ffcc;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+}
+
+.stat-item {
+    color: #00ffcc;
+    text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+}
+
+/* 스토리 출력 박스 - 터미널 콘솔 로그 스타일 */
+.story-box {
+    flex: 1;
+    background: #060810;
+    border: 1px solid #202538;
+    border-top: 3px solid #ffaa00;
+    padding: 20px;
+    line-height: 1.7;
+    font-size: 14px;
+    color: #e6e8ef;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    white-space: pre-line;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+/* 스토리 내부 하이라이트 글자색 보정 */
+.story-box b {
+    color: #ffaa00;
+    text-shadow: 0 0 5px rgba(255, 170, 0, 0.4);
+}
+
+/* 토글형 상태 단말기창 - 경고 서브스크린 스타일 */
+.status-window {
+    display: none;
+    background: #0f111a;
+    border: 1px solid #ffaa00;
+    border-left: 4px solid #ffaa00;
+    padding: 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(255, 170, 0, 0.15);
+    animation: glitchIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.status-window h3 {
+    color: #ffaa00;
+    font-size: 14px;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.status-window h4 {
+    color: #00ffcc;
+    font-size: 13px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.status-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    font-size: 13px;
+    color: #b4b9ca;
+}
+
+.status-divider {
+    border: 0;
+    border-top: 1px dashed #3a415a;
+    margin: 15px 0;
+}
+
+#inventory {
+    font-size: 12.5px;
+    color: #8fa0c0;
+    line-height: 1.6;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+/* 하단 인터페이스 버튼 */
 .choices {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 }
 
 button {
-    background: #222;
-    color: #ddd;
-    border: 1px solid #555;
-    padding: 12px;
-    cursor: pointer;
-    transition: 0.2s;
-    font-size: 15px;
-    font-family: inherit;
+    flex: 1;
+    background: #1a1018;
+    color: #ff0055;
+    border: 1px solid #ff0055;
+    padding: 14px;
+    font-size: 13px;
     font-weight: bold;
+    letter-spacing: 2px;
+    font-family: inherit;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s ease;
+    position: relative;
+    clip-path: polygon(0 0, 93% 0, 100% 30%, 100% 100%, 0 100%);
 }
 
 button:hover {
-    background: #2a2a2a;
-    border-color: #62ff62;
-    color: #62ff62;
-    box-shadow: 0 0 8px rgba(98, 255, 98, 0.2);
+    background: #ff0055;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
 }
 
-/* --- 지도 레이아웃 (수정 완료) --- */
+button:active {
+    transform: scale(0.98);
+    filter: brightness(0.8);
+}
+
+/* 오른쪽 레이더 맵 세션 */
 .map-section {
-    width: 320px; 
-    border: 1px solid #444;
-    padding: 15px;
-    background: #151515;
+    flex: 0.85;
+    background: #06070c;
+    padding: 25px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
-.map-section h2 {
+.section-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #8fa0c0;
+    letter-spacing: 3px;
     text-align: center;
-    color: #62ff62;
-    margin-bottom: 15px;
-    font-size: 18px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 0 0 3px rgba(143, 160, 192, 0.3);
 }
 
+/* 미니맵 레이더 그리드 (6x6) */
 .map-grid {
     display: grid;
-    gap: 5px;
-    background: #0a0a0a;
-    padding: 10px;
-    border: 1px solid #333;
-    margin-bottom: 15px;
-    width: 100%;
-    height: 290px; /* 지도가 무조건 형태를 갖추도록 고정 높이 지정 */
+    gap: 6px;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 25px auto;
+    padding: 8px;
+    background: #0b0d16;
+    border: 1px solid #202538;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
 }
 
-/* 각 방(격자 칸) 기본 스타일 */
+/* 맵 개별 타일 베이스 */
 .cell {
-    background: #1f1f1f;
+    background: #101424;
+    border: 1px solid #1a2035;
+    color: #2d3554; /* 탐색 안 한 기호는 어둡게 가림 */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
-    color: #444; /* 미탐색 점(·) 색상 */
-    border: 1px solid #2a2a2a;
-    cursor: default;
     transition: all 0.2s ease;
 }
 
-/* 플레이어가 갈 수 있는 사방 1칸 */
+/* 현재 플레이어 타일 - 사이버 핑크 폭발 */
+.cell.current {
+    color: #ffffff !important;
+    background: #ff0055 !important;
+    border-color: #ff0055 !important;
+    box-shadow: 0 0 12px #ff0055;
+    animation: pulse 1.5s infinite;
+}
+
+/* 이동 가능한 인접 타일 - 그린 가이드 네온 */
 .cell.reachable {
-    border-color: #555;
-    background: #2a2a2a;
+    border-color: #00ffcc;
+    color: #00ffcc;
     cursor: pointer;
-    color: #888;
 }
 
 .cell.reachable:hover {
-    background: #3a3a3a;
-    border-color: #62ff62;
+    background: rgba(0, 255, 204, 0.15);
+    box-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+    color: #ffffff;
 }
 
-/* 플레이어 현재 위치 스타일 */
-.cell.current {
-    color: #62ff62 !important;
-    background: #113311;
-    border-color: #62ff62;
-    text-shadow: 0 0 8px #62ff62;
+/* 투시/스캔 구역 타일 스타일 수정 (깨짐 수정 연동) */
+.cell.radar-visible { 
+    background: #2b1f0a !important; 
+    border-color: #ffaa00 !important;
 }
 
-/* 보스 방 스타일 */
-.cell.boss {
-    color: #ff3333;
-    text-shadow: 0 0 8px #ff3333;
+/* 특수 방 커스텀 폰트 네온 매칭 */
+.cell.boss { color: #ff00ff; text-shadow: 0 0 8px #ff00ff; font-size: 18px; }
+.cell.rest { color: #ffaa00; text-shadow: 0 0 8px #ffaa00; }
+
+/* 데이터 수집이 완료된 안전 구역 투명화 */
+.cell[style*="color: rgb(255, 255, 255)"], 
+.cell[style*="color: white"] {
+    color: #536185 !important;
+    background: #0a0d1a;
 }
 
-/* 고정 휴식처 충전소 스타일 */
-.cell.rest {
-    color: #33bbff;
-    text-shadow: 0 0 8px #33bbff;
-}
-
-/* 레이더 가시거리 안개 구역 스타일 */
-.cell.radar-visible {
-    color: #666;
-    background: #1b1e1b;
-}
-
-/* 범례 스타일 */
+/* 하단 데이터 범례 상자 */
 .legend {
+    background: #0b0d16;
+    border: 1px solid #202538;
+    padding: 15px;
+    font-size: 11px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.legend h3 {
+    margin-bottom: 10px;
+    color: #536185;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #202538;
+    padding-bottom: 6px;
+}
+
+.legend ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.legend li {
+    color: #8fa0c0;
+    display: flex;
+    align-items: center;
+}
+
+.legend-symbol {
+    display: inline-block;
+    width: 20px;
     font-size: 13px;
-    color: #aaa;
-    line-height: 1.6;
-    border-top: 1px solid #333;
-    padding-top: 10px;
+    text-align: center;
+    margin-right: 6px;
+    font-weight: bold;
 }
 
-.legend p {
-    margin-bottom: 3px;
+/* 글로벌 전역 커스텀 스크롤바 */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #06070c; }
+::-webkit-scrollbar-thumb { background: #202538; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #ff0055; }
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+/* 플레이어 위치 펄스 애니메이션 */
+@keyframes pulse {
+    0% { box-shadow: 0 0 4px #ff0055; }
+    50% { box-shadow: 0 0 15px #ff0055; }
+    100% { box-shadow: 0 0 4px #ff0055; }
 }
 
-@media (max-width: 768px) {
-    .main-content {
-        flex-direction: column-reverse;
-    }
-    .map-section {
-        width: 100%;
-    }
+/* 창 열릴 때 글리치 느낌으로 툭 튀어나오는 애니메이션 */
+@keyframes glitchIn {
+    0% { opacity: 0; transform: scaleY(0); transform-origin: top; filter: brightness(2); }
+    80% { opacity: 0.9; transform: scaleY(1.05); }
+    100% { opacity: 1; transform: scaleY(1); filter: brightness(1); }
+}
+/* ==========================================
+   ✨ 신규 추가: 캐릭터 선택 화면 스타일
+   ========================================== */
+.char-select-container {
+    width: 950px;
+    text-align: center;
+    background: #090a10;
+    border: 2px solid #00ffcc;
+    padding: 40px 20px;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+    clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
+}
+
+.select-title {
+    font-size: 26px;
+    color: #00ffcc;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.select-desc {
+    font-size: 13px;
+    color: #8fa0c0;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.char-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.char-card {
+    background: #101424;
+    border: 1px solid #202538;
+    border-top: 4px solid #202538;
+    padding: 25px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 0 100%);
+}
+
+.char-card:hover {
+    border-color: #ff0055;
+    background: #161220;
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+}
+
+.char-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.char-card h2 {
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.char-lore {
+    font-size: 12px;
+    color: #8fa0c0;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.char-stats-preview {
+    font-size: 11px;
+    color: #00ffcc;
+    background: #060810;
+    padding: 6px 10px;
+    border-radius: 2px;
+    width: 100%;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.char-item-preview {
+    font-size: 11px;
+    color: #ffaa00;
+    font-weight: bold;
+}
+
+/* 기존 게임 타이틀 보완 */
+.game-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #ff0055;
+    text-shadow: 0 0 10px rgba(255, 0, 85, 0.6);
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 2px dashed #202538;
+    padding-bottom: 8px;
+}
+
+.game-title .subtitle {
+    font-size: 14px;
+    color: #00ffcc;
+    text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
+    font-weight: normal;
+    letter-spacing: 1px;
 }
