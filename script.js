@@ -501,7 +501,7 @@ function renderMap() {
                     }
                     cell.classList.add("radar-visible");
                 } else if (state.type === "gold") {
-                    cell.textContent = "🪙"; 
+                    cell.textContent = "💵"; 
                     cell.style.color = "#ffff44";
                     cell.classList.add("radar-visible");
                 } else {
@@ -682,7 +682,7 @@ function findRadar() {
     story.innerHTML = `
         📡 <b>기계 도시의 단말기 부품(레이더)</b>을 발견했습니다!<br><br>
         미니맵 전력 개방! 현재 위치 기준 주변 1칸 반경(대각선 포함)의 안개를 스캔합니다.<br>
-        사거리 내에 들어온 <b>보물 상자(🪙)</b>, <b>몬스터(⚠️)</b>, <b>정예 기계(☠️)</b> 및 <b style="color: #00ffff;">정예 상자(💎)</b>의 정보가 투시됩니다.
+        사거리 내에 들어온 <b>보물 상자(💵)</b>, <b>몬스터(⚠️)</b>, <b>정예 기계(☠️)</b> 및 <b style="color: #00ffff;">정예 상자(💎)</b>의 정보가 투시됩니다.
     `;
 }
 
@@ -701,7 +701,7 @@ function restRoom(message = "") {
         const disabled = player.gold < item.cost ? "disabled" : "";
         return `
             <button onclick="${item.action}" ${disabled}>
-                🪙 ${item.cost} | ${item.label}
+                💵 ${item.cost} | ${item.label}
                 <span style="display:block; font-size: 12px; opacity: 0.75;">${item.desc}</span>
             </button>
         `;
@@ -722,7 +722,7 @@ function restRoom(message = "") {
         ${notice}
         기계 장치들이 부드럽게 돌아가는 안전 구역입니다.<br>
         이곳에서는 무료 충전기를 쓰거나 골드로 정비 부품을 구매할 수 있습니다.<br>
-        <span style="color: #ffaa00; font-weight: bold;">현재 층: ${currentFloor} / ${maxFloor} | 보유 골드: 🪙 ${player.gold} | 보유 은화: ${player.silver} | 이번 층 무료 충전 기회: ${remainingRest} / ${maxRestCount}회</span><br><br>
+        <span style="color: #ffaa00; font-weight: bold;">현재 층: ${currentFloor} / ${maxFloor} | 보유 골드: 💵 ${player.gold} | 보유 은화: ${player.silver} | 이번 층 무료 충전 기회: ${remainingRest} / ${maxRestCount}회</span><br><br>
     `;
 
     if (remainingRest > 0) {
@@ -760,7 +760,7 @@ function useRestStation() {
 
 function spendGold(cost) {
     if (player.gold < cost) {
-        restRoom(`🪙 골드가 부족합니다. 필요한 골드: ${cost}`);
+        restRoom(`💵 골드가 부족합니다. 필요한 골드: ${cost}`);
         return false;
     }
 
@@ -1019,8 +1019,8 @@ function winBattle() {
                 <h2>⬆️ ${currentFloor}층 제어 코어 파괴!</h2>
                 <b>${currentEnemy.name}</b>를 무력화하자 위층으로 이어지는 승강 장치가 깨어납니다.<br>
                 다음 층의 경비 시스템은 더 두껍고 더 날카롭게 재조립됩니다.<br><br>
-                획득 골드: 🪙 ${currentEnemy.gold}<br>
-                현재 골드: 🪙 ${player.gold}<br><br>
+                획득 골드: 💵 ${currentEnemy.gold}<br>
+                현재 골드: 💵 ${player.gold}<br><br>
                 <button onclick="ascendToNextFloor()" style="border-color: #00ffff; color: #00ffff;">⬆️ ${currentFloor + 1}층으로 올라가기</button>
             `;
             inBattle = true;
@@ -1034,7 +1034,7 @@ function winBattle() {
             <h2>🎉 기계 도시 클리어!</h2>
             3층 최종 제어 코어를 무력화시키는 데 성공했습니다.<br>
             아래층부터 이어지던 기계음이 완전히 멎고, 마침내 지상으로 향하는 문이 열립니다.<br><br>
-            최종 골드: 🪙 ${player.gold}<br><br>
+            최종 골드: 💵 ${player.gold}<br><br>
             <button onclick="resetGame()" style="border-color: #62ff62; color: #62ff62;">🔄 새로운 여정 시작하기</button>
         `;
         isGameOver = true;
@@ -1061,7 +1061,7 @@ function winBattle() {
         }
     }
 
-    const rewardText = currentEnemy.isElite ? `🔥 [정예 처치] 🪙 ${currentEnemy.gold}` : `🪙 ${currentEnemy.gold}`;
+    const rewardText = currentEnemy.isElite ? `🔥 [정예 처치] 💵 ${currentEnemy.gold}` : `💵 ${currentEnemy.gold}`;
     
     story.innerHTML += `
         <br>🏆 승리! ${currentEnemy.name}를 처치하고 ${rewardText} 골드를 획득했습니다.${eliteRewardLog}
@@ -1125,7 +1125,7 @@ function lootCorpse() {
         if (subChance < 0.40) {
             const extraGold = Math.floor(Math.random() * 15) + 5;
             player.gold += extraGold;
-            story.innerHTML = `⚙️ <b>[ENGINEER_PRIVILEGE] 시체 정밀 해체 성공!</b><br><br>기계 전문가의 솜씨로 안전하게 내부 비상 금고를 우회 해킹했습니다!<br><span style="color: #ffff44;">🪙 추가 골드 +${extraGold} 획득!</span>`;
+            story.innerHTML = `⚙️ <b>[ENGINEER_PRIVILEGE] 시체 정밀 해체 성공!</b><br><br>기계 전문가의 솜씨로 안전하게 내부 비상 금고를 우회 해킹했습니다!<br><span style="color: #ffff44;">💵 추가 골드 +${extraGold} 획득!</span>`;
         } else {
             const item = getRandomItem();
             applyItemReward(item, false);
@@ -1148,7 +1148,7 @@ function lootCorpse() {
             if (subChance < LOOT_GOLD_CHANCE) {
                 const extraGold = Math.floor(Math.random() * 15) + 5;
                 player.gold += extraGold;
-                story.innerHTML = `💀 <b>시체 수색 성공!</b><br><br>숨겨진 내부 비상 금고를 해킹하여 대박을 터트렸습니다!<br><span style="color: #ffff44;">🪙 추가 골드 +${extraGold} 획득!</span>`;
+                story.innerHTML = `💀 <b>시체 수색 성공!</b><br><br>숨겨진 내부 비상 금고를 해킹하여 대박을 터트렸습니다!<br><span style="color: #ffff44;">💵 추가 골드 +${extraGold} 획득!</span>`;
             } else {
                 const item = getRandomItem();
                 applyItemReward(item, false);
@@ -1228,7 +1228,7 @@ function gameOver() {
 function findGold() {
     const amount = Math.floor((Math.random() * 10 + 5) * (1 + (currentFloor - 1) * 0.35));
     player.gold += amount;
-    story.innerHTML = `🪙 ${currentFloor}층 보물 상자 발견!<br><br>골드 +${amount}`;
+    story.innerHTML = `💵 ${currentFloor}층 보물 상자 발견!<br><br>골드 +${amount}`;
     updateStats();
 }
 
