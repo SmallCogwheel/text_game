@@ -1,5 +1,6 @@
 // ==========================================
 // DOM 캐시 (매번 getElementById 호출 방지)
+//혹시 모르는 업데이트 체크
 // ==========================================
 const story = document.getElementById("story");
 const mapDiv = document.getElementById("map");
