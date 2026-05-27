@@ -438,7 +438,7 @@ function renderMap() {
                     cell.textContent = "□";
                     cell.style.color = "#fff";
                 } else {
-                    cell.textContent = "[NET]";
+                    cell.textContent = "[R]";
                     cell.style.color = "#bb66ff";
                 }
             } 
@@ -680,7 +680,7 @@ function openEliteChest() {
 function findRadar() {
     hasRadar = true;
     story.innerHTML = `
-        [NET] <b>기계 도시의 단말기 부품(레이더)</b>을 발견했습니다!<br><br>
+        [R] <b>기계 도시의 단말기 부품(레이더)</b>을 발견했습니다!<br><br>
         미니맵 전력 개방! 현재 위치 기준 주변 1칸 반경(대각선 포함)의 안개를 스캔합니다.<br>
         사거리 내에 들어온 <b>보물 상자([G])</b>, <b>몬스터([!])</b>, <b>정예 기계([X])</b> 및 <b style="color: #00ffff;">정예 상자([$])</b>의 정보가 투시됩니다.
     `;
