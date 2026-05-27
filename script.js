@@ -871,17 +871,20 @@ function scaleEnemyForFloor(enemy, isBoss = false) {
 }
 
 function getBossEnemy() {
-    const floorBossNames = ["중앙 톱니", "상층 압축 코어", "최종 제어 코어"];
-    let boss;
-    if (!bosses || bosses.length === 0) {
-        boss = { id: "core_gear", name: "중앙 톱니", hp: 100, atk: 15, gold: 100 };
-    } else {
-        // 층에 맞는 보스 데이터를 사용 (없으면 첫 번째로 폴백)
-        const bossIndex = Math.min(currentFloor - 1, bosses.length - 1);
-        boss = { ...bosses[bossIndex] };
+    let pool;
+
+    if (!bosses || !bosses["floor" + currentFloor]) {
+        // 폴백: 데이터 없을 때 기본 보스
+        const fallback = {
+            1: { id: "core_gear",          name: "중앙 톱니",      hp: 115, atk: 17, gold: 120 },
+            2: { id: "upper_core",         name: "상층 압축 코어", hp: 220, atk: 28, gold: 220 },
+            3: { id: "final_control_core", name: "최종 제어 코어", hp: 380, atk: 45, gold: 380 }
+        };
+        return scaleEnemyForFloor({ ...fallback[currentFloor] }, true);
     }
 
-    boss.name = floorBossNames[currentFloor - 1] || boss.name;
+    pool = bosses["floor" + currentFloor];
+    const boss = { ...pool[Math.floor(Math.random() * pool.length)] };
     return scaleEnemyForFloor(boss, true);
 }
 
