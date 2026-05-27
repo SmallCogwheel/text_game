@@ -1068,19 +1068,52 @@ function winBattle() {
     `;
 
     if (chosenClass === "samurai") {
+    
+        // 현재 처치 수
         player.samuraiKills = (player.samuraiKills || 0) + 1;
+    
+        // 다음 강화 필요 킬 수 (초기값 3)
+        if (!player.samuraiNextThreshold) {
+            player.samuraiNextThreshold = 3;
+        }
+    
+        // 강화 조건 달성
+        if (player.samuraiKills >= player.samuraiNextThreshold) {
+                const katana = playerInventory.find(
+                    item => item.name && item.name.includes("크롬 카타나")
+                );
         
-        if (player.samuraiKills % SAMURAI_KILL_THRESHOLD === 0) {
-            player.atk += SAMURAI_ATK_BONUS;
-            
-            const katana = playerInventory.find(item => item.name && item.name.includes("크롬 카타나"));
-            if (katana) {
-                katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS;
-            }
-            
-            story.innerHTML += `<br><br><span style="color: #ff3333; font-weight: bold;">⚔️ [SAMURAI_PASSIVE] 검술 숙련도 극대화! 몬스터 ${SAMURAI_KILL_THRESHOLD}마리 처치 달성으로 크롬 카타나가 강화되었습니다! (ATK +${SAMURAI_ATK_BONUS} 영구 상승, 현재 처치: ${player.samuraiKills}마리)</span><br>`;
-        } else {
-            story.innerHTML += `<br><br><span style="color: #aaa;">🗡️ 카타나에 적의 에너지가 흡수됩니다. (다음 강화까지: ${SAMURAI_KILL_THRESHOLD - (player.samuraiKills % SAMURAI_KILL_THRESHOLD)}마리 처치 필요)</span><br>`;
+                if (katana) {
+                    katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS;
+                }
+        
+                story.innerHTML += `
+                <br><br>
+                <span style="color: #ff3333; font-weight: bold;">
+                ⚔️ [SAMURAI_PASSIVE]
+                검술 숙련도 극대화!
+                몬스터 ${player.samuraiNextThreshold}마리 처치 달성으로
+                크롬 카타나가 강화되었습니다!
+                (ATK +${SAMURAI_ATK_BONUS} 영구 상승)
+                </span><br>
+                `;
+    
+                // 다음 강화 요구치 증가
+                player.samuraiNextThreshold += 1;
+
+                // 킬 카운트 초기화
+                player.samuraiKills = 0;
+
+            } else {
+    
+                story.innerHTML += `
+                <br><br>
+                <span style="color: #aaa;">
+                🗡️ 카타나에 적의 에너지가 흡수됩니다.
+                (다음 강화까지:
+                ${player.samuraiNextThreshold - player.samuraiKills}마리 처치 필요)
+                </span><br>
+            `;
         }
     }
 
