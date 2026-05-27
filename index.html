@@ -7,37 +7,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ✨ 신규 추가: 캐릭터 선택 화면 (데모 스타트 라인) -->
+    <!-- ** 신규 추가: 캐릭터 선택 화면 (데모 스타트 라인) -->
     <div id="char-select-container" class="char-select-container">
-        <h1 class="select-title">⚡ SELECT_YOUR_AVATAR // 클래스 선택</h1>
+        <h1 class="select-title">[+] SELECT_YOUR_AVATAR // 클래스 선택</h1>
         <p class="select-desc">기계 도시 코어 해킹을 위한 프로토콜 아바타를 동조하십시오.</p>
         
         <div class="char-grid">
             <!-- 1. 넷러너 (기존 레이더방 특전 상세화) -->
             <div class="char-card" onclick="selectCharacter('netrunner')">
-                <div class="char-icon" style="color: #00ffcc;">📡</div>
+                <div class="char-icon" style="color: #00ffcc;">[R]</div>
                 <h2>넷러너 (Netrunner)</h2>
                 <p class="char-lore">시스템 해킹 특화형 아바타. 탐지 장치를 기본 탑재하여 적의 위치를 미리 간파합니다.</p>
-                <div class="char-stats-preview">❤️ HP: 16 | ⚔️ ATK: 4 | 🛡️ DEF: 0 | 🔍 SCAN: 3</div>
-                <div class="char-item-preview">🎁 특전: 동조 레이더 가동 및 레이더실 분해 시 엘리트 장비 연성</div>
+                <div class="char-stats-preview">[HP] HP: 16 | [ATK] ATK: 4 | [DEF] DEF: 0 | [SCN] SCAN: 3</div>
+                <div class="char-item-preview">[ITEM] 특전: 동조 레이더 가동 및 레이더실 분해 시 엘리트 장비 연성</div>
             </div>
 
             <!-- 2. 스트리트 사뮤라이 (20% 추가 피해 패시브 반영) -->
             <div class="char-card" onclick="selectCharacter('samurai')">
-                <div class="char-icon" style="color: #ff0055;">⚔️</div>
+                <div class="char-icon" style="color: #ff0055;">[ATK]</div>
                 <h2>사무라이 (Samurai)</h2>
                 <p class="char-lore">전면전 특화형 고속 검사. 높은 기본 공격력과 크롬 카타나를 장착하고 시작합니다.</p>
-                <div class="char-stats-preview">❤️ HP: 20 | ⚔️ ATK: 7 | 🛡️ DEF: 0 | 🔍 SCAN: 2</div>
-                <div class="char-item-preview" style="color: #ff5555; font-weight: bold;">🎁 특전: 크롬 카타나 장착 + 가한 데미지의 20% 추가 피해 + 적 4번 처치시 ATK 2+</div>
+                <div class="char-stats-preview">[HP] HP: 20 | [ATK] ATK: 7 | [DEF] DEF: 0 | [SCN] SCAN: 2</div>
+                <div class="char-item-preview" style="color: #ff5555; font-weight: bold;">[ITEM] 특전: 크롬 카타나 장착 + 가한 데미지의 20% 추가 피해 + 적 4번 처치시 ATK 2+</div>
             </div>
 
             <!-- 3. 헤비 메카닉 (시체 파밍 100% 성공 확정 반영) -->
             <div class="char-card" onclick="selectCharacter('mechanic')">
-                <div class="char-icon" style="color: #ffaa00;">🛡️</div>
+                <div class="char-icon" style="color: #ffaa00;">[DEF]</div>
                 <h2>메카닉 (Mechanic)</h2>
                 <p class="char-lore">방어 및 유지력 특화 엔지니어. 단단한 티타늄 장갑과 방어 장비를 가집니다.</p>
-                <div class="char-stats-preview">❤️ HP: 26 | ⚔️ ATK: 3 | 🛡️ DEF: 2 | 🔍 SCAN: 3</div>
-                <div class="char-item-preview" style="color: #62ff62; font-weight: bold;">🎁 특전: 티타늄 판넬 장착 + 기계 시체 수색 성공률 100% (자폭 무력화)</div>
+                <div class="char-stats-preview">[HP] HP: 26 | [ATK] ATK: 3 | [DEF] DEF: 2 | [SCN] SCAN: 3</div>
+                <div class="char-item-preview" style="color: #62ff62; font-weight: bold;">[ITEM] 특전: 티타늄 판넬 장착 + 기계 시체 수색 성공률 100% (자폭 무력화)</div>
             </div>
         </div>
     </div>
@@ -46,15 +46,15 @@
     <div id="game-container" class="game-container" style="display: none;">
         <!-- 왼쪽: 게임 로그 및 조작 섹션 -->
         <div class="main-section">
-            <h1 class="game-title">⚡ ROOT_ACCESS <span class="subtitle">// 기계 도시</span></h1>
+            <h1 class="game-title">[+] ROOT_ACCESS <span class="subtitle">// 기계 도시</span></h1>
 
             <!-- 상단 고정 스탯 바 -->
             <div class="stats">
-                <div class="stat-item">❤️ HP: <span id="hp">20/20</span></div>
-                <div class="stat-item">⚔️ ATK: <span id="atk">5</span></div>
-                <div class="stat-item">🛡️ DEF: <span id="def">0</span></div>
-                <div class="stat-item">💵 GOLD: <span id="gold">20</span></div>
-                <div class="stat-item">🔍 SCAN: <span id="searchCount">3/3</span></div>
+                <div class="stat-item">[HP] HP: <span id="hp">20/20</span></div>
+                <div class="stat-item">[ATK] ATK: <span id="atk">5</span></div>
+                <div class="stat-item">[DEF] DEF: <span id="def">0</span></div>
+                <div class="stat-item">[G] GOLD: <span id="gold">20</span></div>
+                <div class="stat-item">[SCN] SCAN: <span id="searchCount">3/3</span></div>
             </div>
 
             <!-- 스토리 텍스트 출력 구역 -->
@@ -70,7 +70,7 @@
                         <div>• 현재 내구도(HP): <span id="status-hp">20 / 20</span></div>
                         <div>• 출력 제어(ATK): <span id="status-atk">5</span></div>
                         <div>• 장갑 수치(DEF): <span id="status-def">0</span></div>
-                        <div>• 보유 자원(GOLD): 💵 <span id="status-gold">20</span></div>
+                        <div>• 보유 자원(GOLD): [G] <span id="status-gold">20</span></div>
                         <div>• 동조 장치(RADAR): <span id="status-radar">OFF</span></div>
                     </div>
                     <hr class="status-divider">
@@ -99,12 +99,12 @@
                     <li><span class="legend-symbol" style="color: #fff;">□</span> 탐색 완료 구역</li>
                     <li><span class="legend-symbol" style="color: #888;">·</span> 미탐색 구역</li>
                     <li><span class="legend-symbol" style="color: #ffbb33;">■</span> 레이더 탐지 (빈 방)</li>
-                    <li><span class="legend-symbol">⚠️</span> 기계 경비 (몬스터)</li>
-                    <li><span class="legend-symbol" style="color: #ff3333;">☠️</span> 정예 경비 (엘리트)</li>
-                    <li><span class="legend-symbol" style="color: #bb66ff;">📡</span> 레이더 단말기</li>
-                    <li><span class="legend-symbol" style="color: #ffaa00;">⚡</span> 발전 충전소 (휴식)</li>
-                    <li><span class="legend-symbol" style="color: #00ffff;">💎</span> 엘리트 금고 (상자)</li>
-                    <li><span class="legend-symbol" style="color: #ff33ff;">★</span> 중앙 제어실 (보스)</li>
+                    <li><span class="legend-symbol">[!]</span> 기계 경비 (몬스터)</li>
+                    <li><span class="legend-symbol" style="color: #ff3333;">[X]</span> 정예 경비 (엘리트)</li>
+                    <li><span class="legend-symbol" style="color: #bb66ff;">[R]</span> 레이더 단말기</li>
+                    <li><span class="legend-symbol" style="color: #ffaa00;">[+]</span> 발전 충전소 (휴식)</li>
+                    <li><span class="legend-symbol" style="color: #00ffff;">[$]</span> 엘리트 금고 (상자)</li>
+                    <li><span class="legend-symbol" style="color: #ff33ff;">[BOSS]</span> 중앙 제어실 (보스)</li>
                 </ul>
             </div>
         </div>
