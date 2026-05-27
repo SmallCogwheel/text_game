@@ -14,7 +14,7 @@ const MAX_FLOOR = 3;
 const MAX_REST_COUNT = 2;
 const DEF_BLOCK_CAP = 0.60;       // 방어력이 막을 수 있는 적 공격의 최대 비율
 const SAMURAI_BONUS_RATIO = 0.20;  // 사무라이 추가 피해 비율
-const SAMURAI_KILL_THRESHOLD = 3;  // 사무라이 카타나 강화 주기
+const SAMURAI_KILL_THRESHOLD = 4;  // 사무라이 카타나 강화 주기
 const SAMURAI_ATK_BONUS = 2;       // 카타나 강화 시 공격력 증가량
 const LOOT_SUCCESS_CHANCE = 0.20;  // 일반 시체 수색 성공 확률
 const LOOT_GOLD_CHANCE = 0.40;     // 성공 시 골드/아이템 분기 확률
@@ -1067,56 +1067,7 @@ function winBattle() {
         <br><br><span style="color: #aaaaaa;">바닥에 쓰러진 기계의 잔해가 연기를 내뿜고 있습니다. 시체를 뒤져 쓸만한 전리품을 수색하시겠습니까?</span>
     `;
 
-    if (chosenClass === "samurai") {
-    
-        // 총 처치 수 누적
-        player.samuraiKills = (player.samuraiKills || 0) + 1;
-    
-        // 다음 강화 목표 초기값
-        if (!player.samuraiNextThreshold) {
-            player.samuraiNextThreshold = 3;
-        }
-    
-        // 강화 조건
-        if (player.samuraiKills >= player.samuraiNextThreshold) {
-    
-            const katana = playerInventory.find(
-                item => item.name && item.name.includes("크롬 카타나")
-            );
-    
-            if (katana) {
-                katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS;
-            }
-    
-            story.innerHTML += `
-            <br><br>
-            <span style="color: #ff3333; font-weight: bold;">
-            ⚔️ [SAMURAI_PASSIVE]
-            검술 숙련도 극대화!
-            누적 ${player.samuraiNextThreshold}마리 처치로
-            크롬 카타나가 강화되었습니다!
-            (ATK +${SAMURAI_ATK_BONUS} 영구 상승)
-            </span><br>
-            `;
-    
-            // 다음 요구치 증가
-            // 3 -> 7 -> 12 -> 18 ...
-            player.samuraiNextThreshold += (
-                Math.floor(player.samuraiNextThreshold / 2) + 1
-            );
-    
-        } else {
-    
-            story.innerHTML += `
-            <br><br>
-            <span style="color: #aaa;">
-            🗡️ 카타나에 적의 에너지가 흡수됩니다.
-            (다음 강화까지:
-            ${player.samuraiNextThreshold - player.samuraiKills}마리 처치 필요)
-            </span><br>
-            `;
-        }
-    }
+    if (chosenClass === "samurai") { player.samuraiKills = (player.samuraiKills || 0) + 1; if (player.samuraiKills % SAMURAI_KILL_THRESHOLD === 0) { const katana = playerInventory.find(item => item.name && item.name.includes("크롬 카타나")); if (katana) { katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS; } story.innerHTML += <br><br><span style="color: #ff3333; font-weight: bold;">⚔️ [SAMURAI_PASSIVE] 검술 숙련도 극대화! 몬스터 ${SAMURAI_KILL_THRESHOLD}마리 처치 달성으로 크롬 카타나가 강화되었습니다! (ATK +${SAMURAI_ATK_BONUS} 영구 상승, 현재 처치: ${player.samuraiKills}마리)</span><br>; } else { story.innerHTML += <br><br><span style="color: #aaa;">🗡️ 카타나에 적의 에너지가 흡수됩니다. (다음 강화까지: ${SAMURAI_KILL_THRESHOLD - (player.samuraiKills % SAMURAI_KILL_THRESHOLD)}마리 처치 필요)</span><br>; } }
 
     const choicesDiv = document.getElementById("choices");
     choicesDiv.innerHTML = `
