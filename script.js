@@ -1,6 +1,6 @@
 // ==========================================
 // DOM 캐시 (매번 getElementById 호출 방지)
-//혹시 모르는 업데이트 체크
+// 혹시 모르는 업데이트 체크
 // ==========================================
 const story = document.getElementById("story");
 const mapDiv = document.getElementById("map");
@@ -100,23 +100,12 @@ function fetchJson(path) {
         if (!res.ok) {
             throw new Error(`${path} 로드 실패 (${res.status})`);
         }
-        // 응답이 JSON인지 확인 (file:// 프로토콜에서 HTML 에러페이지 반환 방지)
-        const ct = res.headers.get("content-type") || "";
-        if (!ct.includes("json") && !ct.includes("text/plain") && !ct.includes("octet-stream") && !ct.includes("application")) {
-            // content-type이 html이면 JSON 파싱 전에 경고만 남기고 빈 배열 반환
-            console.warn(`${path}: content-type이 JSON이 아닙니다 (${ct}). 빈 데이터로 대체합니다.`);
-            return [];
-        }
         return res.json();
-    }).catch(e => {
-        console.warn(`${path} 로드 실패, 빈 데이터로 대체:`, e.message);
-        return [];
     });
 }
 
 // 데이터 로드 기능
 async function loadGameData() {
-    // 이미 로드 완료된 경우 재사용 (실패 캐싱 방지: gameDataPromise는 성공 시만 유지)
     if (gameDataPromise) return gameDataPromise;
 
     gameDataPromise = Promise.all([
@@ -127,16 +116,15 @@ async function loadGameData() {
         fetchJson("./assets/elite_items.json"),
         fetchJson("./assets/superior_items.json")
     ]).then(([monsterData, itemData, bossData, eliteMonsterData, eliteItemData, superiorItemData]) => {
-        monsters = Array.isArray(monsterData) ? monsterData : [];
-        items = Array.isArray(itemData) ? itemData : [];
-        bosses = Array.isArray(bossData) ? bossData : [];
-        eliteMonsters = Array.isArray(eliteMonsterData) ? eliteMonsterData : [];
-        eliteItems = Array.isArray(eliteItemData) ? eliteItemData : [];
-        superiorItems = Array.isArray(superiorItemData) ? superiorItemData : [];
+        monsters = monsterData;
+        items = itemData;
+        bosses = bossData;
+        eliteMonsters = eliteMonsterData;
+        eliteItems = eliteItemData;
+        superiorItems = superiorItemData;
     }).catch(e => {
         console.error("데이터 로드 실패 - JSON 파일 경로 및 문법을 확인하세요:", e);
         monsters = []; items = []; bosses = []; eliteMonsters = []; eliteItems = []; superiorItems = [];
-        gameDataPromise = null; // 실패 시 캐시 초기화 → 다음 호출 시 재시도 가능
     });
 
     return gameDataPromise;
@@ -1080,7 +1068,7 @@ function winBattle() {
         <br><br><span style="color: #aaaaaa;">바닥에 쓰러진 기계의 잔해가 연기를 내뿜고 있습니다. 시체를 뒤져 쓸만한 전리품을 수색하시겠습니까?</span>
     `;
 
-    if (chosenClass === "samurai") { player.samuraiKills = (player.samuraiKills || 0) + 1; if (player.samuraiKills % SAMURAI_KILL_THRESHOLD === 0) { const katana = playerInventory.find(item => item.name && item.name.includes("크롬 카타나")); if (katana) { katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS; } story.innerHTML += <br><br><span style="color: #ff3333; font-weight: bold;">⚔️ [SAMURAI_PASSIVE] 검술 숙련도 극대화! 몬스터 ${SAMURAI_KILL_THRESHOLD}마리 처치 달성으로 크롬 카타나가 강화되었습니다! (ATK +${SAMURAI_ATK_BONUS} 영구 상승, 현재 처치: ${player.samuraiKills}마리)</span><br>; } else { story.innerHTML += <br><br><span style="color: #aaa;">🗡️ 카타나에 적의 에너지가 흡수됩니다. (다음 강화까지: ${SAMURAI_KILL_THRESHOLD - (player.samuraiKills % SAMURAI_KILL_THRESHOLD)}마리 처치 필요)</span><br>; } }
+    if (chosenClass === "samurai") { player.samuraiKills = (player.samuraiKills || 0) + 1; if (player.samuraiKills % SAMURAI_KILL_THRESHOLD === 0) { const katana = playerInventory.find(item => item.name && item.name.includes("크롬 카타나")); if (katana) { katana.atk = (katana.atk || 0) + SAMURAI_ATK_BONUS; } story.innerHTML += `<br><br><span style="color: #ff3333; font-weight: bold;">⚔️ [SAMURAI_PASSIVE] 검술 숙련도 극대화! 몬스터 ${SAMURAI_KILL_THRESHOLD}마리 처치 달성으로 크롬 카타나가 강화되었습니다! (ATK +${SAMURAI_ATK_BONUS} 영구 상승, 현재 처치: ${player.samuraiKills}마리)</span><br>`; } else { story.innerHTML += `<br><br><span style="color: #aaa;">🗡️ 카타나에 적의 에너지가 흡수됩니다. (다음 강화까지: ${SAMURAI_KILL_THRESHOLD - (player.samuraiKills % SAMURAI_KILL_THRESHOLD)}마리 처치 필요)</span><br>`; } }
 
     const choicesDiv = document.getElementById("choices");
     choicesDiv.innerHTML = `
