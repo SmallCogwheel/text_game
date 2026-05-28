@@ -20,9 +20,9 @@
   ],
   "floor3": [
     { "id": "final_control_core","name": "최종 제어 코어","hp": 380, "atk": 45, "gold": 380 },
-    { "id": "omega_engine",     "name": "오메가 엔진",    "hp": 420, "atk": 40, "gold": 360 },
+    { "id": "omega_engine",     "name": "[오메가]Ω 코어",    "hp": 420, "atk": 40, "gold": 360 },
     { "id": "void_reactor",     "name": "공허 반응로",    "hp": 350, "atk": 50, "gold": 400 },
-    { "id": "apex_automaton",   "name": "정점 자동기",    "hp": 400, "atk": 43, "gold": 370 },
+    { "id": "apex_automaton",   "name": "자율 행동 AI",    "hp": 400, "atk": 43, "gold": 370 },
     { "id": "singularity_core", "name": "특이점 코어",    "hp": 450, "atk": 38, "gold": 390 }
   ]
 }

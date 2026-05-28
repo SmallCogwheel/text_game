@@ -30,5 +30,12 @@
     "atk": 8,
     "def": 1,
     "hp": 8
+  },
+  {
+    "id": "lucky_gambler's_dice",
+    "name": "운 좋은 도박군의 주사위",
+    "atk": 7,
+    "def": 7,
+    "hp": 7
   }
 ]

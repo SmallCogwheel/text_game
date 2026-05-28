@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROOT_ACCESS : 기계 도시</title>
+    <link rel="icon" href="./assets/icon.png" type="image/png">
+    <!--<link rel="shortcut icon" href="./assets/icon.png"> -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,30 +16,39 @@
         
         <div class="char-grid">
             <!-- 1. 넷러너 (기존 레이더방 특전 상세화) -->
-            <div class="char-card" onclick="selectCharacter('netrunner')">
+            <div class="char-card" onclick="selectCharacter('netrunner')" style="border-top-color:#00ffcc;">
                 <div class="char-icon" style="color: #00ffcc;">NET</div>
                 <h2>넷러너 (Netrunner)</h2>
                 <p class="char-lore">시스템 해킹 특화형 아바타. 탐지 장치를 기본 탑재하여 적의 위치를 미리 간파합니다.</p>
-                <div class="char-stats-preview">HP: 16 | ATK: 4 | DEF: 0 | SCAN: 3</div>
-                <div class="char-item-preview">[ITEM] 특전: 합성화 금속 레이더 가동 및 레이더실 분해 시 엘리트 장비 연성</div>
+                <div class="char-stats-preview" style="border-left-color:#00ffcc;color:#00ffcc;">HP: 16 | ATK: 4 | DEF: 0 | SCAN: 3</div>
+                <div class="char-item-preview"  style="color: #00ffcc; font-weight: bold;">[ITEM] 특전: 합성화 금속 레이더 가동 및 레이더실 분해 시 엘리트 장비 연성</div>
             </div>
 
             <!-- 2. 스트리트 사뮤라이 (20% 추가 피해 패시브 반영) -->
-            <div class="char-card" onclick="selectCharacter('samurai')">
+            <div class="char-card" onclick="selectCharacter('samurai')" style="border-top-color:#ff0055;">
                 <div class="char-icon" style="color: #ff0055;">SAM</div>
                 <h2>사무라이 (Samurai)</h2>
                 <p class="char-lore">전면전 특화형 고속 검사. 높은 기본 공격력과 크롬 카타나를 장착하고 시작합니다.</p>
-                <div class="char-stats-preview">HP: 20 | ATK: 7 | DEF: 0 | SCAN: 2</div>
-                <div class="char-item-preview" style="color: #ff5555; font-weight: bold;">[ITEM] 특전: 크롬 카타나 장착 + 가한 데미지의 20% 추가 피해 + 적 4번 처치시 ATK 2+</div>
+                <div class="char-stats-preview" style="border-left-color:#ff0055;color:#ff0055;">HP: 20 | ATK: 7 | DEF: 0 | SCAN: 2</div>
+                <div class="char-item-preview" style="color: #ff0055; font-weight: bold;">[ITEM] 특전: 크롬 카타나 장착 + 가한 데미지의 20% 추가 피해 + 적 4번 처치시 ATK 2+</div>
             </div>
 
             <!-- 3. 헤비 메카닉 (시체 파밍 100% 성공 확정 반영) -->
-            <div class="char-card" onclick="selectCharacter('mechanic')">
+            <div class="char-card" onclick="selectCharacter('mechanic')" style="border-top-color:#ffaa00;">
                 <div class="char-icon" style="color: #ffaa00;">MEC</div>
                 <h2>메카닉 (Mechanic)</h2>
                 <p class="char-lore">방어 및 유지력 특화 엔지니어. 단단한 티타늄 장갑과 방어 장비를 가집니다.</p>
-                <div class="char-stats-preview">HP: 26 | ATK: 3 | DEF: 2 | SCAN: 3</div>
-                <div class="char-item-preview" style="color: #62ff62; font-weight: bold;">[ITEM] 특전: 티타늄 판넬 장착 + 기계 시체 수색 성공률 100% (자폭 무력화)</div>
+                <div class="char-stats-preview" style="border-left-color:#ffaa00;color:#ffaa00;">HP: 26 | ATK: 3 | DEF: 2 | SCAN: 3</div>
+                <div class="char-item-preview" style="color: #ffaa00; font-weight: bold;">[ITEM] 특전: 티타늄 판넬 장착 + 기계 시체 수색 성공률 100% (자폭 무력화)</div>
+            </div>
+
+            <!-- 4. 광대 (주사위 전투) -->
+            <div class="char-card" onclick="selectCharacter('jester')" style="border-top-color:#ff00ff;">
+                <div class="char-icon" style="color: #ff00ff;">JST</div>
+                <h2>광대 (Jester)</h2>
+                <p class="char-lore">운명에 모든 것을 맡긴 저주받은 광대. 공격도 방어도 오직 주사위가 결정합니다.</p>
+                <div class="char-stats-preview" style="border-left-color:#ff00ff;color:#ff00ff;">HP: 18 | ATK: 0 | DEF: 0 | SCAN: 3</div>
+                <div class="char-item-preview" style="color: #ff00ff; font-weight: bold;">[DICE] 단지 모든것은 운에 맏겨보십시오!</div>
             </div>
         </div>
     </div>
@@ -110,6 +121,9 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="constants.js"></script>
+    <script src="ui.js"></script>
+    <script src="map.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
