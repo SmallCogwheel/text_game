@@ -201,21 +201,21 @@ function handleRadarRoom(key) {
         roomStates[key] = { type: "radar_cleared" };
         if (chosenClass === "netrunner") {
             const roll = Math.random();
-            let droppedItem, rarityLabel, rarityColor, isEliteFlag, rarityKey;
+            let droppedItem, rarityLabel, rarityColor, isEliteFlag;
             if (roll < 0.90) {
                 droppedItem = getRandomItem();
-                rarityLabel = "일반"; rarityColor = "#62ff62"; isEliteFlag = false; rarityKey = "normal";
+                rarityLabel = "일반"; rarityColor = "#62ff62"; isEliteFlag = false;
             } else if (roll < 0.99) {
                 droppedItem = eliteItems?.length ? eliteItems[Math.floor(Math.random() * eliteItems.length)] : getRandomItem();
-                rarityLabel = "엘리트"; rarityColor = "#00ffff"; isEliteFlag = true; rarityKey = "elite";
+                rarityLabel = "엘리트"; rarityColor = "#00ffff"; isEliteFlag = true;
             } else {
                 droppedItem = superiorItems?.length ? superiorItems[Math.floor(Math.random() * superiorItems.length)] : getRandomItem();
-                rarityLabel = "은화 전용"; rarityColor = "#d8d8ff"; isEliteFlag = true; rarityKey = "silver";
+                rarityLabel = "은화 전용"; rarityColor = "#d8d8ff"; isEliteFlag = true;
             }
             if (!droppedItem) {
                 story.innerHTML = `[NET] 단말기를 분해했으나 내부 코어가 손상되어 부품을 얻지 못했습니다.`;
             } else {
-                applyItemReward(droppedItem, isEliteFlag, rarityKey);
+                applyItemReward(droppedItem, isEliteFlag);
                 story.innerHTML = `
                     <h3 style="color:#00ffff;margin-bottom:8px;">[NET] [SCRAP_PROTOCOL] 레이더 시스템 완전 해체</h3>
                     단말기 내부 회로를 분석하여 부품을 추출했습니다.<br>
