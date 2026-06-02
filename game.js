@@ -50,6 +50,20 @@ async function selectCharacter(className) {
     document.getElementById("char-select-container").style.display = "none";
     document.getElementById("game-container").style.display = "flex";
 
+    // 난이도 배지 표시
+    const diffColors = { easy: "#00ffcc", normal: "#62ff62", hard: "#ffaa00", expert: "#ff3333" };
+    const titleEl = document.querySelector(".game-title");
+    if (titleEl) {
+        const oldBadge = titleEl.querySelector("#difficulty-badge");
+        if (oldBadge) oldBadge.remove();
+        const badge = document.createElement("span");
+        badge.id = "difficulty-badge";
+        badge.style.color = diffColors[currentDifficulty] || "#62ff62";
+        badge.style.borderColor = diffColors[currentDifficulty] || "#62ff62";
+        badge.textContent = DIFFICULTY_LABELS[currentDifficulty] ?? currentDifficulty.toUpperCase();
+        titleEl.appendChild(badge);
+    }
+
     const jesterDiceIntro = (() => {
         if (className !== "jester") return "";
         const inv = playerInventory.find(i => i._jesterRolled);
@@ -92,8 +106,9 @@ function getRandomItem() {
 }
 
 function scaleEnemyForFloor(enemy, isBoss = false) {
-    const hpM   = 1 + (currentFloor - 1) * (isBoss ? FLOOR_BOSS_HP_SCALE  : FLOOR_HP_SCALE);
-    const atkM  = 1 + (currentFloor - 1) * (isBoss ? FLOOR_BOSS_ATK_SCALE : FLOOR_ATK_SCALE);
+    const diff  = DIFFICULTY_MULTIPLIER[currentDifficulty] ?? 1.0;
+    const hpM   = (1 + (currentFloor - 1) * (isBoss ? FLOOR_BOSS_HP_SCALE  : FLOOR_HP_SCALE))  * diff;
+    const atkM  = (1 + (currentFloor - 1) * (isBoss ? FLOOR_BOSS_ATK_SCALE : FLOOR_ATK_SCALE)) * diff;
     const goldM = 1 + (currentFloor - 1) * FLOOR_GOLD_SCALE;
     const label = currentFloor > 1 ? `${currentFloor}층 강화 ` : "";
     return { ...enemy, name: `${label}${enemy.name}`,
@@ -785,6 +800,9 @@ function confirmGoToCharSelect() {
 function resetGame() {
     document.getElementById("game-container").style.display = "none";
     document.getElementById("char-select-container").style.display = "block";
+    // 난이도 배지 제거
+    const badge = document.getElementById("difficulty-badge");
+    if (badge) badge.remove();
     playerInventory = []; inventorySortMode = "rarity"; prevX = prevY = 1;
     player.silver = 0; currentFloor = 1; totalSearches = 0; restCount = 0;
     inBattle = false; isGameOver = false; currentEnemy = null;
@@ -793,6 +811,17 @@ function resetGame() {
     visited.clear(); restoreDefaultChoices();
     const sw = document.getElementById("status-window");
     if (sw) sw.style.display = "none";
+}
+
+// ── 난이도 선택 ────────────────────────────
+function setDifficulty(level) {
+    if (!DIFFICULTY_MULTIPLIER[level]) return;
+    currentDifficulty = level;
+    // 버튼 selected 상태 토글
+    ["easy","normal","hard","expert"].forEach(d => {
+        const el = document.getElementById("diff-" + d);
+        if (el) el.classList.toggle("selected", d === level);
+    });
 }
 
 // ── 초기화 ─────────────────────────────────

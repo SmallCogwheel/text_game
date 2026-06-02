@@ -14,6 +14,29 @@
         <h1 class="select-title">[+] SELECT_YOUR_AVATAR // 클래스 선택</h1>
         <p class="select-desc">기계 도시 코어 해킹을 위한 프로토콜 아바타를 동조하십시오.</p>
         
+        <!-- 난이도 선택 -->
+        <div class="difficulty-select">
+            <p class="difficulty-label">// DIFFICULTY_PROTOCOL 설정</p>
+            <div class="difficulty-grid">
+                <div class="diff-card" id="diff-easy"   onclick="setDifficulty('easy')"   style="border-color:#00ffcc;">
+                    <div class="diff-name" style="color:#00ffcc;">이지</div>
+                    <div class="diff-desc">적 능력치 50% &nbsp;|&nbsp; 입문자 권장</div>
+                </div>
+                <div class="diff-card selected" id="diff-normal" onclick="setDifficulty('normal')" style="border-color:#62ff62;">
+                    <div class="diff-name" style="color:#62ff62;">노말</div>
+                    <div class="diff-desc">적 능력치 100% &nbsp;|&nbsp; 기본 난이도</div>
+                </div>
+                <div class="diff-card" id="diff-hard"   onclick="setDifficulty('hard')"   style="border-color:#ffaa00;">
+                    <div class="diff-name" style="color:#ffaa00;">하드</div>
+                    <div class="diff-desc">적 능력치 150% &nbsp;|&nbsp; 숙련자용</div>
+                </div>
+                <div class="diff-card" id="diff-expert" onclick="setDifficulty('expert')" style="border-color:#ff3333;">
+                    <div class="diff-name" style="color:#ff3333;">익스퍼트</div>
+                    <div class="diff-desc">적 능력치 300% &nbsp;|&nbsp; 극한의 도전</div>
+                </div>
+            </div>
+        </div>
+
         <div class="char-grid">
             <!-- 1. 넷러너 (기존 레이더방 특전 상세화) -->
             <div class="char-card" onclick="selectCharacter('netrunner')" style="border-top-color:#00ffcc;">

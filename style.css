@@ -682,3 +682,69 @@ button:active {
     33%       { box-shadow: 0 0 40px #ffdd00, 0 0 80px rgba(255,221,0,0.6); }
     66%       { box-shadow: 0 0 40px #d8d8ff, 0 0 80px rgba(216,216,255,0.6); }
 }
+/* ── 난이도 선택 ── */
+.difficulty-select {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto 24px;
+    text-align: center;
+}
+
+.difficulty-label {
+    color: #888;
+    font-size: 0.85em;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.difficulty-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.diff-card {
+    border: 1px solid #333;
+    background: rgba(0,0,0,0.4);
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+
+.diff-card:hover {
+    background: rgba(255,255,255,0.06);
+    transform: translateY(-2px);
+}
+
+.diff-card.selected {
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 12px currentColor;
+}
+
+.diff-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.diff-desc {
+    font-size: 0.72em;
+    color: #aaa;
+    line-height: 1.5;
+}
+
+/* 난이도 배지 (게임 중 표시) */
+#difficulty-badge {
+    font-size: 0.78em;
+    padding: 2px 8px;
+    border: 1px solid currentColor;
+    margin-left: 8px;
+    vertical-align: middle;
+    opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+    .difficulty-grid { grid-template-columns: repeat(2, 1fr); }
+}
