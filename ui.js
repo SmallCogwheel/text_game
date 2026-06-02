@@ -69,6 +69,12 @@ function getItemRarityLabel(item) {
 }
 
 function applyItemReward(item, isEliteStatus = false) {
+    // "운 좋은 도박군의 주사위" 특별 처리 — 5~10 사이의 랜덤 스탯
+    if (item.name?.includes("운 좋은 도박군의 주사위")) {
+        const randomStat = Math.floor(Math.random() * 6) + 5; // 5~10
+        item = { ...item, atk: randomStat, def: randomStat, hp: randomStat };
+    }
+
     const iAtk = item.atk || 0;
     const iDef = item.def || 0;
     const iHp  = item.hp  || 0;
