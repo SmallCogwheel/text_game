@@ -27,6 +27,21 @@ const FLOOR_GOLD_SCALE     = 0.35;
 const GUARD_DEF_BONUS      = 8;     // 가드 시 일시 DEF 상승 고정치
 const GUARD_DEF_CAP        = 0.85;  // 가드 시 최대 피해 감소율 (85%)
 
+// ── 난이도 배율 ────────────────────────────
+const DIFFICULTY_MULTIPLIER = {
+    "easy":   0.5,    // 노말 (쉬움)
+    "normal": 1.0,    // 노말 (기본)
+    "hard":   1.5,    // 하드
+    "expert": 3.0     // 익스퍼트
+};
+
+const DIFFICULTY_LABELS = {
+    "easy":   "이지",
+    "normal": "노말",
+    "hard":   "하드",
+    "expert": "익스퍼트"
+};
+
 // ── DOM 캐시 ───────────────────────────────
 const story      = document.getElementById("story");
 const mapDiv     = document.getElementById("map");
@@ -73,6 +88,9 @@ let currentRoomKey = null;
 const visited  = new Set();
 let roomStates = {};
 let hasRadar   = false;
+
+// ── 난이도 설정 ────────────────────────────
+let currentDifficulty = "normal";
 
 // ── 데이터 로드 ────────────────────────────
 function fetchJson(path) {
