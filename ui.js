@@ -154,3 +154,117 @@ function restoreDefaultChoices() {
     `;
     choicesDiv.style.display = "flex";
 }
+
+// ── 디버그 명령 (콘솔용) ───────────────────
+function additems(itemName, quantity = 1) {
+    if (!itemName || quantity <= 0) {
+        console.log("❌ 사용법: additems('아이템 이름', 수량)");
+        return;
+    }
+
+    const numQuantity = parseInt(quantity);
+    if (isNaN(numQuantity) || numQuantity <= 0) {
+        console.log("❌ 수량은 1 이상의 숫자여야 합니다.");
+        return;
+    }
+
+    let foundItem = false;
+
+    // 1. 일반 아이템에서 찾기
+    if (items?.length) {
+        const item = items.find(i => i.name === itemName);
+        if (item) {
+            for (let i = 0; i < numQuantity; i++) {
+                applyItemReward(item, false);
+            }
+            foundItem = true;
+        }
+    }
+
+    // 2. 엘리트 아이템에서 찾기
+    if (!foundItem && eliteItems?.length) {
+        const item = eliteItems.find(i => i.name === itemName);
+        if (item) {
+            for (let i = 0; i < numQuantity; i++) {
+                applyItemReward(item, true);
+            }
+            foundItem = true;
+        }
+    }
+
+    // 3. 상위 아이템에서 찾기
+    if (!foundItem && superiorItems?.length) {
+        const item = superiorItems.find(i => i.name === itemName);
+        if (item) {
+            for (let i = 0; i < numQuantity; i++) {
+                applyItemReward(item, true);
+            }
+            foundItem = true;
+        }
+    }
+
+    if (foundItem) {
+        console.log(`✅ "${itemName}" x${numQuantity}을(를) 추가했습니다.`);
+        updateStats();
+        updateInventoryUI();
+    } else {
+        console.log(`❌ "${itemName}"을(를) 찾을 수 없습니다.`);
+        console.log("사용 가능한 아이템 목록:");
+        if (items?.length) console.log("일반:", items.map(i => i.name));
+        if (eliteItems?.length) console.log("엘리트:", eliteItems.map(i => i.name));
+        if (superiorItems?.length) console.log("상위:", superiorItems.map(i => i.name));
+    }
+}
+
+function removeitems(itemName, quantity = 1) {
+    if (!itemName || quantity <= 0) {
+        console.log("❌ 사용법: removeitems('아이템 이름', 수량)");
+        return;
+    }
+
+    const numQuantity = parseInt(quantity);
+    if (isNaN(numQuantity) || numQuantity <= 0) {
+        console.log("❌ 수량은 1 이상의 숫자여야 합니다.");
+        return;
+    }
+
+    // 해당 아이템을 인벤토리에서 찾기
+    const firstMatchIndex = playerInventory.findIndex(item => item.name === itemName);
+    
+    if (firstMatchIndex === -1) {
+        console.log(`❌ 인벤토리에 "${itemName}"이(가) 없습니다.`);
+        return;
+    }
+
+    // 제거할 아이템 정보
+    const itemToRemove = playerInventory[firstMatchIndex];
+    const iAtk = itemToRemove.atk || 0;
+    const iDef = itemToRemove.def || 0;
+    const iHp = itemToRemove.hp || 0;
+
+    // 실제로 제거할 개수 계산
+    const itemsWithSameName = playerInventory.filter(item => item.name === itemName);
+    const actualRemoveCount = Math.min(numQuantity, itemsWithSameName.length);
+
+    // 인벤토리에서 제거
+    for (let i = 0; i < actualRemoveCount; i++) {
+        const idx = playerInventory.findIndex(item => item.name === itemName);
+        if (idx !== -1) playerInventory.splice(idx, 1);
+    }
+
+    // 스탯 원상복구
+    player.atk -= iAtk * actualRemoveCount;
+    player.def -= iDef * actualRemoveCount;
+    if (iHp > 0) {
+        player.maxHp -= iHp * actualRemoveCount;
+        player.hp = Math.min(player.hp, player.maxHp); // HP가 maxHp를 초과하지 않도록
+    }
+
+    console.log(`✅ "${itemName}" x${actualRemoveCount}을(를) 제거했습니다.`);
+    if (actualRemoveCount < numQuantity) {
+        console.log(`⚠️  요청한 수량(${numQuantity})보다 실제 개수(${actualRemoveCount})가 적었습니다.`);
+    }
+
+    updateStats();
+    updateInventoryUI();
+}
