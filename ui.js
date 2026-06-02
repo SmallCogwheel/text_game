@@ -68,7 +68,7 @@ function getItemRarityLabel(item) {
     return r === "silver" ? "은화" : r === "elite" ? "엘리트" : "일반";
 }
 
-function applyItemReward(item, isEliteStatus = false, rarity = null) {
+function applyItemReward(item, isEliteStatus = false) {
     const iAtk = item.atk || 0;
     const iDef = item.def || 0;
     const iHp  = item.hp  || 0;
@@ -77,8 +77,7 @@ function applyItemReward(item, isEliteStatus = false, rarity = null) {
     player.def += iDef;
     if (iHp > 0) { player.maxHp += iHp; player.hp += iHp; }
 
-    const itemRarity = rarity
-        || item.rarity
+    const itemRarity = item.rarity 
         || (item.name?.includes("(은화)") ? "silver" : (isEliteStatus ? "elite" : "normal"));
 
     playerInventory.push({ name: item.name, atk: iAtk, def: iDef, hp: iHp, isElite: isEliteStatus, rarity: itemRarity });
