@@ -20,7 +20,7 @@
 ├── map.js
 ├── game.js
 └── assets/
-    ├── icon.png
+    ├── icon.png <-- 준비중
     ├── monsters.json
     ├── items.json
     ├── boss.json
